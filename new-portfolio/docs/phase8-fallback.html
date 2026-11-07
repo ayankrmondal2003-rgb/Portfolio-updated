@@ -1,0 +1,24 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Local fallback verification</title></head><body>
+<div id="root"></div>
+<script>
+// Development-only fixture. Not a Vite build entry and never deployed.
+const mode = new URLSearchParams(location.search).get('mode');
+if (mode === 'webgl') {
+  const original = HTMLCanvasElement.prototype.getContext;
+  HTMLCanvasElement.prototype.getContext = function(type, ...args) {
+    return type === 'webgl2' ? null : original.call(this, type, ...args);
+  };
+}
+if (mode === 'motion') {
+  const original = window.matchMedia.bind(window);
+  window.matchMedia = query => {
+    const result = original(query);
+    if (query.includes('prefers-reduced-motion')) {
+      Object.defineProperty(result, 'matches', { value: query.includes(': reduce)') });
+    }
+    return result;
+  };
+}
+</script><script type="module" src="/src/main.tsx"></script>
+</body></html>

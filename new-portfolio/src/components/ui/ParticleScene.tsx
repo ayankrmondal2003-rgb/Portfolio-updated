@@ -4,6 +4,8 @@ import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { gsap } from "gsap";
 import { ShaderMaterial, Vector2 } from "three";
 import { particleSettings } from "../../lib/particlePolicy";
+import { LightRibbons } from "./LightRibbons";
+import { ribbonSettings } from "../../lib/ribbonGeometry";
 
 type Props = {
   mode: "tablet" | "desktop";
@@ -35,7 +37,7 @@ const fragmentShader = `
   varying vec3 vColor;
   void main() {
     float radius = length(gl_PointCoord - .5);
-    float alpha = (1.0 - smoothstep(.15, .5, radius)) * .65;
+    float alpha = (1.0 - smoothstep(.15, .5, radius)) * .32;
     gl_FragColor = vec4(vColor, alpha);
   }`;
 
@@ -154,6 +156,7 @@ function Field({ mode, active, host, onFailure }: Props) {
       if ((frames === 1 || frames % 60 === 0) && host.current) {
         host.current.dataset.particleFrames = String(frames);
         host.current.dataset.particleCount = String(settings.count);
+        host.current.dataset.ribbonCount = String(ribbonSettings[mode].count);
         host.current.dataset.particleDpr = String(gl.getPixelRatio());
         host.current.dataset.particleRenderMs = (totalCost / frames).toFixed(2);
         host.current.dataset.particleDrawCalls = String(gl.info.render.calls);
@@ -166,9 +169,11 @@ function Field({ mode, active, host, onFailure }: Props) {
     return () => {
       gsap.ticker.remove(tick);
     };
-  }, [active, advance, gl, host, onFailure, settings.fps, settings.count]);
+  }, [active, advance, gl, host, onFailure, settings.fps, settings.count, mode]);
 
   return (
+    <>
+    <LightRibbons mode={mode} time={uniforms.uTime} aspect={uniforms.uAspect} />
     <points frustumCulled={false}>
       <bufferGeometry>
         <bufferAttribute
@@ -187,6 +192,7 @@ function Field({ mode, active, host, onFailure }: Props) {
         depthTest={false}
       />
     </points>
+    </>
   );
 }
 
