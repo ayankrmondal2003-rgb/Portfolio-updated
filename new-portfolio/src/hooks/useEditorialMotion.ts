@@ -15,9 +15,22 @@ export function useEditorialMotion() {
       cleanAnimation = undefined;
       if (!preference.matches || !("IntersectionObserver" in window)) return;
       try {
-        const { gsap } = await import("gsap");
+        const [{ gsap }, { ScrollTrigger }] = await Promise.all([
+          import("gsap"), import("gsap/ScrollTrigger"),
+        ]);
         if (disposed || current !== generation || !preference.matches) return;
+        gsap.registerPlugin(ScrollTrigger);
         const context = gsap.context(() => {});
+        context.add(() => {
+          document.querySelectorAll<HTMLElement>(".timeline-track").forEach(track => {
+            const line = track.querySelector(".timeline-progress");
+            if (!line) return;
+            gsap.fromTo(line, { scaleY: 0 }, {
+              scaleY: 1, ease: "none",
+              scrollTrigger: { trigger: track, start: "top 75%", end: "bottom 65%", scrub: .5 },
+            });
+          });
+        });
         const observer = new IntersectionObserver(
           (entries) => {
             for (const entry of entries) {
@@ -45,7 +58,7 @@ export function useEditorialMotion() {
           { threshold: 0.2 },
         );
         document
-          .querySelectorAll(".section-heading, .section-divider")
+          .querySelectorAll(".section-heading, .section-divider, .project-door-card, .skill-group, .milestone-timeline article, .about-portrait")
           .forEach((element) => observer.observe(element));
         cleanAnimation = () => {
           observer.disconnect();

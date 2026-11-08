@@ -38,10 +38,10 @@ const fragmentShader = `
     float core = 1.0 - smoothstep(.0, .22, edge);
     float ends = smoothstep(0.0, .12, vUv.x) * (1.0 - smoothstep(.84, 1.0, vUv.x));
     float flow = .72 + .28 * sin(vUv.x * 9.0 - uTime * .35 + vRibbon);
-    vec3 blue = vec3(.278, .486, 1.0);
-    vec3 cyan = vec3(.30, .65, .76);
-    vec3 color = mix(blue, cyan, step(2.5, vRibbon) * .45);
-    color = mix(color, vec3(.70, .82, 1.0), core * .25);
+    vec3 amber = vec3(.64, .53, .30);
+    vec3 sage = vec3(.48, .57, .42);
+    vec3 color = mix(amber, sage, step(2.5, vRibbon) * .45);
+    color = mix(color, vec3(.90, .86, .71), core * .25);
     gl_FragColor = vec4(color, (soft * .42 + core * .24) * ends * flow);
   }`;
 

@@ -4,11 +4,16 @@
   "version": "0.1.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "typecheck": "tsc --noEmit",
-    "lint": "eslint . --max-warnings 0",
-    "build": "tsc --noEmit && vite build",
-    "preview": "vite preview"
+    "dev": "npm --prefix new-portfolio run dev",
+    "typecheck": "npm --prefix new-portfolio run typecheck",
+    "lint": "npm --prefix new-portfolio run lint",
+    "test": "npm --prefix new-portfolio test",
+    "build": "npm --prefix new-portfolio run build",
+    "check": "npm --prefix new-portfolio run check",
+    "preview": "npm --prefix new-portfolio run preview"
+  },
+  "engines": {
+    "node": ">=20.0.0"
   },
   "dependencies": {
     "@fontsource/ibm-plex-mono": "^5.2.7",

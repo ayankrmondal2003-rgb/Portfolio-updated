@@ -1,0 +1,1513 @@
+/* ==========================================================================
+   RISHI THAKOR INSPIRED CRAFT STYLES (DOORS, TIME MACHINE, HANGING ROPE, HERO)
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   1. Theme System Variables & Background Transitions
+   -------------------------------------------------------------------------- */
+:root {
+  --font-editorial: "Space Grotesk", sans-serif;
+  --font-mono: "IBM Plex Mono", monospace;
+  --transition-theme: background-color 0.45s cubic-bezier(0.16, 1, 0.3, 1),
+                      color 0.35s ease,
+                      border-color 0.35s ease;
+}
+
+html.dark {
+  --color-bg-base: #0a0a0c;
+  --color-bg-surface: #141418;
+  --color-bg-elevated: #1d1e24;
+  --color-text-main: #ededed;
+  --color-text-muted: #9ca3af;
+  --color-border-subtle: rgba(255, 255, 255, 0.08);
+  --color-border-highlight: rgba(216, 196, 148, 0.3);
+  --color-accent-gold: #d8c494;
+  --color-accent-emerald: #10b981;
+}
+
+html.light {
+  --color-bg-base: #f6f5f0;
+  --color-bg-surface: #ffffff;
+  --color-bg-elevated: #f0eee6;
+  --color-text-main: #111111;
+  --color-text-muted: #575c50;
+  --color-border-subtle: rgba(0, 0, 0, 0.09);
+  --color-border-highlight: rgba(122, 96, 43, 0.35);
+  --color-accent-gold: #a67c2e;
+  --color-accent-emerald: #059669;
+}
+
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text-main);
+  transition: var(--transition-theme);
+}
+
+/* --------------------------------------------------------------------------
+   2. Interactive Hanging Rope Light-Switch Cord (Top-Right)
+   -------------------------------------------------------------------------- */
+.hanging-rope-container {
+  position: fixed;
+  top: 0;
+  right: clamp(16px, 3.5vw, 42px);
+  z-index: 1000;
+  cursor: grab;
+  user-select: none;
+  touch-action: none;
+  filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.25));
+  animation: pendulumSway 7s ease-in-out infinite;
+  transform-origin: 14px 0px;
+}
+
+.hanging-rope-container:hover {
+  filter: drop-shadow(0 8px 16px rgba(216, 196, 148, 0.35));
+}
+
+.hanging-rope-container.is-pulling {
+  cursor: grabbing;
+  animation: none;
+}
+
+.hanging-rope-container.is-rebounding {
+  animation: none;
+}
+
+@keyframes pendulumSway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  30% {
+    transform: rotate(1.4deg);
+  }
+  75% {
+    transform: rotate(-1.2deg);
+  }
+}
+
+.hanging-rope-svg {
+  overflow: visible;
+  display: block;
+}
+
+.rope-handle-group {
+  transition: transform 0.1s ease-out;
+}
+.hanging-rope-container:hover .rope-handle-group {
+  transform: scale(1.04);
+}
+
+/* --------------------------------------------------------------------------
+   3. Top Navigation & Dynamic Local Clock Badge
+   -------------------------------------------------------------------------- */
+.nav-right-cluster {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-left: auto;
+}
+
+.local-time-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px;
+  background: rgba(125, 125, 125, 0.08);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: var(--color-text-muted);
+}
+
+.live-clock-pulse {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent-emerald);
+  box-shadow: 0 0 8px var(--color-accent-emerald);
+  animation: clockBlink 2s infinite;
+}
+
+@keyframes clockBlink {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+/* --------------------------------------------------------------------------
+   4. Hero 3D Spiral Flip Notebook Calendar
+   -------------------------------------------------------------------------- */
+.spiral-notebook-widget {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 18px 0 28px;
+  perspective: 1200px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.notebook-ring-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 0 16px;
+  margin-bottom: -7px;
+  position: relative;
+  z-index: 10;
+}
+
+.notebook-ring-coil {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 10px;
+}
+
+.coil-metal {
+  width: 6px;
+  height: 18px;
+  background: linear-gradient(135deg, #e6e6e6 0%, #888888 40%, #ffffff 60%, #444444 100%);
+  border-radius: 3px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+
+.coil-hole {
+  width: 8px;
+  height: 3px;
+  background: #1a1a1a;
+  border-radius: 50%;
+}
+
+.notebook-page-stack {
+  position: absolute;
+  inset: 10px 0 0 0;
+  pointer-events: none;
+}
+
+.stack-layer {
+  position: absolute;
+  inset: 0;
+  border-radius: 4px 4px 12px 12px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-elevated);
+}
+
+.layer-1 { transform: translate(3px, 4px); }
+.layer-2 { transform: translate(6px, 8px); }
+.layer-3 { transform: translate(9px, 12px); box-shadow: 0 16px 30px rgba(0, 0, 0, 0.15); }
+
+.notebook-card-surface {
+  position: relative;
+  background: var(--color-bg-surface);
+  color: var(--color-text-main);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 4px 4px 12px 12px;
+  padding: 24px 28px;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.12);
+  transform-origin: top center;
+  transform-style: preserve-3d;
+  transition: transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1), box-shadow 0.3s ease;
+}
+
+.spiral-notebook-widget:hover .notebook-card-surface {
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.2);
+}
+
+.notebook-card-surface.is-flipping {
+  transform: rotateX(-90deg);
+  opacity: 0.2;
+}
+
+.role-sublabel {
+  display: block;
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.role-headline {
+  font-size: clamp(26px, 3.2vw, 42px);
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin: 0;
+  color: var(--color-text-main);
+}
+
+.page-counter {
+  display: block;
+  font-size: 11px;
+  color: var(--color-text-muted);
+  text-align: right;
+  margin-top: 14px;
+}
+
+/* --------------------------------------------------------------------------
+   5. Hero Portrait Showcase & Floating Ability Badge
+   -------------------------------------------------------------------------- */
+.hero-portrait-stage {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+
+.paper-portrait {
+  position: relative;
+  margin: 0;
+  max-width: 480px;
+}
+
+.portrait-cutout-img {
+  display: block;
+  width: 100%;
+  height: auto;
+  filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.35));
+  mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, black 80%, transparent 100%);
+}
+
+.ability-badge-pin {
+  position: absolute;
+  bottom: 24%;
+  left: -12px;
+  z-index: 20;
+}
+
+.ability-card-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  background: rgba(20, 20, 24, 0.85);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(216, 196, 148, 0.35);
+  border-radius: 40px;
+  color: #f3efe2;
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+}
+
+.ability-card-badge:hover {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 12px 28px rgba(216, 196, 148, 0.3);
+  border-color: #d8c494;
+}
+
+.ability-pulse-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #10b981;
+  box-shadow: 0 0 10px #10b981;
+  animation: clockBlink 2s infinite;
+}
+
+/* Ability Modal Dialog */
+.ability-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 2000;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  animation: fadeIn 0.2s ease-out;
+}
+
+.ability-card-dialog {
+  position: relative;
+  width: 100%;
+  max-width: 580px;
+  background: #141418;
+  border: 1px solid rgba(216, 196, 148, 0.3);
+  border-radius: 16px;
+  padding: 32px;
+  color: #ededed;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  animation: scaleUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.ability-close-btn {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #ededed;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.ability-close-btn:hover {
+  background: rgba(255, 255, 255, 0.18);
+}
+
+.ability-card-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  padding-bottom: 20px;
+}
+
+.ability-avatar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.ability-level-badge {
+  font-size: 10px;
+  padding: 4px 8px;
+  background: rgba(216, 196, 148, 0.15);
+  border: 1px solid rgba(216, 196, 148, 0.3);
+  color: #d8c494;
+  border-radius: 4px;
+}
+
+.ability-sparkle-icon {
+  color: #d8c494;
+}
+
+.ability-tag {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+}
+
+.ability-name {
+  font-size: 26px;
+  font-weight: 700;
+  margin: 4px 0 2px;
+  color: #ffffff;
+}
+
+.ability-institution {
+  font-size: 11px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.ability-stats-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 26px;
+}
+
+.stat-box {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+
+.stat-title-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #d8c494;
+  margin-bottom: 10px;
+}
+
+.stat-bar-track {
+  width: 100%;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+  overflow: hidden;
+  margin-bottom: 8px;
+}
+
+.stat-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #d8c494, #10b981);
+  border-radius: 3px;
+}
+
+.stat-tags {
+  font-size: 10px;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.stat-status-badge {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  color: #e5e7eb;
+}
+
+.ability-card-footer {
+  text-align: center;
+}
+
+.ability-cta-btn {
+  display: inline-block;
+  width: 100%;
+  padding: 14px;
+  background: #d8c494;
+  color: #141418;
+  font-weight: 600;
+  font-size: 13px;
+  border-radius: 30px;
+  text-decoration: none;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.ability-cta-btn:hover {
+  background: #ebd8aa;
+  transform: translateY(-2px);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes scaleUp {
+  from { transform: scale(0.95); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+/* --------------------------------------------------------------------------
+   6. The 3D Doors Section ("Magic happens behind the doors")
+   -------------------------------------------------------------------------- */
+.doors-section {
+  padding: 80px 0 100px;
+}
+
+.doors-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.doors-eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 12px;
+}
+
+.doors-title {
+  font-size: clamp(34px, 5.2vw, 68px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.doors-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 48px;
+}
+
+.door-tab-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  border: 1px solid var(--color-border-subtle);
+  background: var(--color-bg-surface);
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.door-tab-btn:hover,
+.door-tab-btn.is-active {
+  color: var(--color-text-main);
+  border-color: var(--color-border-highlight);
+  background: var(--color-bg-elevated);
+}
+
+.door-tab-indicator {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.door-theme-navy .door-tab-indicator, .door-theme-navy { --theme-door: #273952; --theme-trim: #182436; }
+.door-theme-violet .door-tab-indicator, .door-theme-violet { --theme-door: #433454; --theme-trim: #281e33; }
+.door-theme-sage .door-tab-indicator, .door-theme-sage { --theme-door: #3e4f42; --theme-trim: #263329; }
+.door-theme-terracotta .door-tab-indicator, .door-theme-terracotta { --theme-door: #573c2e; --theme-trim: #362217; }
+
+.doors-showcase-stage {
+  display: grid;
+  grid-template-columns: 1.15fr 0.85fr;
+  align-items: center;
+  gap: clamp(36px, 5vw, 80px);
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+/* Left Checklist Card */
+.door-checklist-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 16px;
+  padding: clamp(28px, 4vw, 44px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+}
+
+.discipline-tag {
+  display: inline-block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  padding: 4px 10px;
+  border-radius: 4px;
+  background: rgba(216, 196, 148, 0.15);
+  color: var(--color-accent-gold);
+  margin-bottom: 10px;
+}
+
+.discipline-subtitle {
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
+  margin-bottom: 24px;
+}
+
+.checklist-items {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.checklist-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--color-text-main);
+}
+
+.check-bullet {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: rgba(16, 185, 129, 0.15);
+  color: #10b981;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.enter-door-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  padding: 14px 28px;
+  background: var(--color-text-main);
+  color: var(--color-bg-base);
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: transform 0.25s ease, background 0.2s ease;
+}
+
+.enter-door-btn:hover {
+  transform: translateY(-2px);
+  filter: brightness(1.1);
+}
+
+/* Right: The 3D Architectural Door */
+.door-3d-wrapper {
+  perspective: 1400px;
+  display: flex;
+  justify-content: center;
+}
+
+.architectural-door {
+  position: relative;
+  width: 260px;
+  height: 440px;
+  cursor: pointer;
+  transform-style: preserve-3d;
+}
+
+/* Arch Frame */
+.door-arch-frame {
+  position: absolute;
+  inset: -12px;
+  border: 14px solid #2a2c26;
+  border-bottom: 4px solid #2a2c26;
+  border-radius: 140px 140px 0 0;
+  box-shadow: inset 0 6px 14px rgba(0, 0, 0, 0.6), 0 20px 40px rgba(0, 0, 0, 0.3);
+  z-index: 1;
+}
+
+/* Interior dark room seen when door is opened */
+.door-interior-portal {
+  position: absolute;
+  inset: 0;
+  background: #050507;
+  border-radius: 130px 130px 0 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  z-index: 2;
+}
+
+.portal-glow {
+  position: absolute;
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(216, 196, 148, 0.3) 0%, transparent 70%);
+}
+
+.portal-text {
+  font-size: 9px;
+  letter-spacing: 0.15em;
+  color: rgba(255, 255, 255, 0.5);
+  position: relative;
+  z-index: 3;
+}
+
+/* The Swinging Door Leaf Panel */
+.door-leaf-panel {
+  position: absolute;
+  inset: 0;
+  background: var(--theme-door, #273952);
+  border: 4px solid var(--theme-trim, #182436);
+  border-radius: 130px 130px 0 0;
+  z-index: 4;
+  transform-origin: left center;
+  transform-style: preserve-3d;
+  transition: transform 0.65s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s ease;
+  box-shadow: 4px 10px 24px rgba(0, 0, 0, 0.45);
+  overflow: hidden;
+}
+
+.architectural-door:hover .door-leaf-panel {
+  transform: rotateY(-18deg);
+  box-shadow: 14px 18px 36px rgba(0, 0, 0, 0.55);
+}
+
+.architectural-door.door-is-open .door-leaf-panel {
+  transform: rotateY(-88deg);
+}
+
+/* Vertical Fluting Grooves */
+.door-fluting {
+  position: absolute;
+  inset: 70px 18px 24px;
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.flute-line {
+  width: 2px;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 1px 0 2px rgba(0, 0, 0, 0.4);
+}
+
+/* Brass Engraved Plaque */
+.door-brass-plaque {
+  position: absolute;
+  top: 90px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 170px;
+  padding: 8px 12px;
+  background: linear-gradient(135deg, #d8b04a 0%, #f7e6a1 35%, #9e751e 70%, #573e0d 100%);
+  border: 1px solid #ffe794;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5;
+}
+
+.plaque-text {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  color: #3b2a07;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+  white-space: nowrap;
+}
+
+.plaque-screw {
+  position: absolute;
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #3b2a07;
+}
+
+.plaque-screw-tl { top: 3px; left: 3px; }
+.plaque-screw-tr { top: 3px; right: 3px; }
+.plaque-screw-bl { bottom: 3px; left: 3px; }
+.plaque-screw-br { bottom: 3px; right: 3px; }
+
+/* Brass Handle & Keyhole */
+.door-brass-hardware {
+  position: absolute;
+  right: 22px;
+  top: 220px;
+  z-index: 5;
+}
+
+.door-keyhole-plate {
+  display: block;
+  width: 12px;
+  height: 38px;
+  background: linear-gradient(135deg, #d8b04a, #9e751e);
+  border-radius: 3px;
+  border: 1px solid #573e0d;
+}
+
+.door-lever-handle {
+  position: absolute;
+  top: 6px;
+  left: -20px;
+  width: 26px;
+  height: 7px;
+  background: linear-gradient(180deg, #ffe794, #9e751e);
+  border-radius: 4px;
+  box-shadow: 0 3px 6px rgba(0, 0, 0, 0.5);
+  transform-origin: right center;
+  transition: transform 0.2s ease;
+}
+
+.architectural-door:hover .door-lever-handle {
+  transform: rotate(14deg);
+}
+
+.door-keyhole {
+  position: absolute;
+  bottom: 8px;
+  left: 4px;
+  width: 4px;
+  height: 7px;
+  background: #1a1a1a;
+  border-radius: 2px;
+}
+
+/* Floating "Click to enter" pill */
+.door-click-pill {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(0, 0, 0, 0.75);
+  backdrop-filter: blur(8px);
+  padding: 6px 14px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: #ffffff;
+  font-size: 11px;
+  white-space: nowrap;
+  opacity: 0.9;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.architectural-door:hover .door-click-pill {
+  opacity: 1;
+  transform: translateX(-50%) translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   7. Inside-Door Project Room
+   -------------------------------------------------------------------------- */
+.inside-door-room {
+  animation: roomZoomIn 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes roomZoomIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.room-nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 0 28px;
+  border-bottom: 1px solid var(--color-border-subtle);
+  margin-bottom: 40px;
+}
+
+.back-to-doors-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 18px;
+  border-radius: 30px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-main);
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.back-to-doors-btn:hover {
+  background: var(--color-bg-elevated);
+  transform: translateX(-3px);
+}
+
+.room-discipline-indicator {
+  font-size: 12px;
+  color: var(--color-accent-gold);
+}
+
+.room-header {
+  margin-bottom: 48px;
+}
+
+.room-eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.room-title {
+  font-size: clamp(36px, 5vw, 64px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin: 0 0 10px;
+}
+
+.room-subtitle {
+  font-size: 15px;
+  color: var(--color-text-muted);
+  max-width: 600px;
+  margin: 0;
+}
+
+.room-projects-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+}
+
+.room-project-card {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  align-items: center;
+  gap: 48px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  padding: clamp(28px, 4vw, 48px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.08);
+}
+
+.proj-category {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-gold);
+  margin-bottom: 12px;
+}
+
+.proj-title {
+  font-size: clamp(24px, 3vw, 36px);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px;
+  line-height: 1.15;
+}
+
+.proj-desc {
+  font-size: 15px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  margin: 0 0 24px;
+}
+
+.proj-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 28px;
+}
+
+.proj-tag {
+  font-size: 11px;
+  padding: 5px 12px;
+  background: rgba(125, 125, 125, 0.08);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+}
+
+.proj-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+}
+
+.proj-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 22px;
+  border-radius: 30px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.2s ease, filter 0.2s ease;
+}
+
+.proj-btn-primary {
+  background: var(--color-text-main);
+  color: var(--color-bg-base);
+}
+
+.proj-btn-primary:hover {
+  filter: brightness(1.15);
+  transform: translateY(-2px);
+}
+
+.proj-btn-ghost {
+  background: transparent;
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-main);
+}
+
+.proj-btn-ghost:hover {
+  background: var(--color-bg-elevated);
+  transform: translateY(-2px);
+}
+
+/* 3D iMac / Studio Display Device Mockup */
+.studio-display-mockup {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.display-bezel {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  background: #111113;
+  border: 10px solid #1a1a1e;
+  border-radius: 14px;
+  box-shadow: 0 24px 50px rgba(0, 0, 0, 0.4);
+  overflow: hidden;
+}
+
+.display-camera {
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #080808;
+  border: 1px solid #333333;
+  z-index: 10;
+}
+
+.display-screen {
+  background: #0d0d10;
+  min-height: 240px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.screen-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.display-screen-placeholder {
+  width: 100%;
+  padding: 24px 20px;
+  text-align: center;
+}
+
+.screen-wireframe-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  margin-bottom: 24px;
+}
+
+.screen-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+.screen-dot-red { background: #ef4444; }
+.screen-dot-yellow { background: #eab308; }
+.screen-dot-green { background: #22c55e; }
+
+.screen-url-bar {
+  margin-left: auto;
+  font-size: 10px;
+  color: #6b7280;
+}
+
+.wireframe-icon {
+  color: var(--color-accent-gold);
+  margin-bottom: 10px;
+}
+
+.wireframe-title {
+  font-size: 18px;
+  color: #ffffff;
+  margin: 0 0 6px;
+}
+
+.wireframe-sub {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  color: #9ca3af;
+}
+
+.screen-reflection {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.06) 0%, transparent 60%);
+  pointer-events: none;
+}
+
+.display-stand-neck {
+  width: 60px;
+  height: 48px;
+  background: linear-gradient(180deg, #333338 0%, #1e1e22 100%);
+  box-shadow: inset 0 2px 4px rgba(255, 255, 255, 0.1);
+}
+
+.display-stand-base {
+  width: 140px;
+  height: 8px;
+  background: linear-gradient(180deg, #3a3a40 0%, #202025 100%);
+  border-radius: 4px 4px 0 0;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* --------------------------------------------------------------------------
+   8. Time Machine ("Let's go back in time")
+   -------------------------------------------------------------------------- */
+.timemachine-section {
+  padding: 90px 0 100px;
+}
+
+.timemachine-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: flex-start;
+  gap: clamp(40px, 6vw, 90px);
+  margin-bottom: 60px;
+}
+
+.timemachine-header {
+  margin-bottom: 28px;
+}
+
+.timemachine-eyebrow {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  color: var(--color-text-muted);
+  margin-bottom: 8px;
+}
+
+.timemachine-title {
+  font-size: clamp(34px, 4.5vw, 62px);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin: 0;
+}
+
+.year-odometer-stage {
+  position: sticky;
+  top: 120px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 30px 0;
+}
+
+/* Rotating Radial Dial behind Year */
+.radial-compass-dial {
+  position: absolute;
+  top: -20px;
+  left: -20px;
+  width: 320px;
+  height: 320px;
+  pointer-events: none;
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  opacity: 0.65;
+}
+
+.radial-svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* Giant 3D Extruded Year Digits */
+.extruded-year-container {
+  position: relative;
+  z-index: 5;
+  margin-bottom: 24px;
+}
+
+.year-3d-digits {
+  position: relative;
+  display: inline-block;
+  font-family: var(--font-editorial);
+  font-size: clamp(80px, 11vw, 150px);
+  font-weight: 800;
+  line-height: 0.9;
+  letter-spacing: -0.06em;
+  animation: yearSlideIn 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.year-digit-main {
+  position: relative;
+  color: var(--color-text-main);
+  text-shadow:
+    0 1px 0 #cccccc,
+    0 2px 0 #b3b3b3,
+    0 3px 0 #999999,
+    0 4px 0 #808080,
+    0 12px 24px rgba(0, 0, 0, 0.3);
+}
+
+html.dark .year-digit-main {
+  color: #ffffff;
+  text-shadow:
+    0 1px 0 #555555,
+    0 2px 0 #444444,
+    0 3px 0 #333333,
+    0 4px 0 #222222,
+    0 16px 32px rgba(0, 0, 0, 0.7);
+}
+
+@keyframes yearSlideIn {
+  from {
+    transform: translateY(24px) scale(0.96);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.timemachine-controls {
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.date-span-pill {
+  font-size: 12px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  color: var(--color-text-muted);
+}
+
+.timemachine-scrubber {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.counter-text {
+  font-size: 11px;
+  color: var(--color-text-muted);
+}
+
+.scrubber-track {
+  width: 90px;
+  height: 4px;
+  background: rgba(125, 125, 125, 0.15);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+.scrubber-fill {
+  height: 100%;
+  background: var(--color-accent-gold);
+  border-radius: 2px;
+  transition: width 0.4s ease;
+}
+
+/* Right: Vertical Timeline Track */
+.vertical-timeline-track {
+  display: flex;
+  flex-direction: column;
+  gap: 36px;
+  position: relative;
+}
+
+.timeline-milestone-node {
+  display: flex;
+  gap: 20px;
+  cursor: pointer;
+  padding: 20px 24px;
+  border-radius: 16px;
+  border: 1px solid transparent;
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.timeline-milestone-node.is-active {
+  background: var(--color-bg-surface);
+  border-color: var(--color-border-subtle);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.08);
+  opacity: 1;
+  filter: blur(0px);
+}
+
+.timeline-milestone-node.is-inactive {
+  opacity: 0.38;
+  filter: blur(1.5px);
+}
+
+.timeline-milestone-node.is-inactive:hover {
+  opacity: 0.8;
+  filter: blur(0px);
+}
+
+.node-marker {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.marker-dot {
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: rgba(125, 125, 125, 0.3);
+  border: 2px solid var(--color-bg-base);
+  margin-top: 4px;
+  transition: all 0.3s ease;
+}
+
+.marker-dot.is-illuminated {
+  background: #10b981;
+  box-shadow: 0 0 12px #10b981;
+  transform: scale(1.2);
+}
+
+.marker-line {
+  width: 2px;
+  flex: 1;
+  background: rgba(125, 125, 125, 0.15);
+  margin-top: 6px;
+}
+
+.node-content {
+  flex: 1;
+}
+
+.milestone-date {
+  display: block;
+  font-size: 11px;
+  color: var(--color-accent-gold);
+  margin-bottom: 6px;
+}
+
+.milestone-role {
+  font-size: 20px;
+  font-weight: 700;
+  margin: 0 0 4px;
+  color: var(--color-text-main);
+}
+
+.milestone-org {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin: 0 0 14px;
+}
+
+.milestone-points {
+  margin: 0;
+  padding-left: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.milestone-points li {
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* --------------------------------------------------------------------------
+   9. Bottom Contact Luxury Card
+   -------------------------------------------------------------------------- */
+.contact-luxury-card {
+  background: var(--color-bg-surface);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 24px;
+  padding: clamp(36px, 6vw, 64px);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+  margin: 40px 0 60px;
+}
+
+.contact-status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-accent-gold);
+  margin-bottom: 20px;
+}
+
+.contact-headline {
+  font-size: clamp(36px, 5.5vw, 72px);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.04em;
+  margin: 0 0 20px;
+}
+
+.contact-headline span {
+  color: var(--color-text-muted);
+}
+
+.contact-lead {
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--color-text-muted);
+  max-width: 620px;
+  margin: 0 0 36px;
+}
+
+.contact-actions-row {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 32px;
+}
+
+.contact-email-text {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  text-decoration: none;
+  padding: 8px 14px;
+}
+
+.contact-socials-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  border-top: 1px solid var(--color-border-subtle);
+  padding-top: 24px;
+}
+
+.socials-label {
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  color: var(--color-text-muted);
+}
+
+.social-pill-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  background: rgba(125, 125, 125, 0.08);
+  border: 1px solid var(--color-border-subtle);
+  border-radius: 20px;
+  font-size: 12px;
+  color: var(--color-text-main);
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.social-pill-link:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-highlight);
+  transform: translateY(-2px);
+}
+
+/* --------------------------------------------------------------------------
+   10. Responsive Breakpoints
+   -------------------------------------------------------------------------- */
+@media (max-width: 900px) {
+  .doors-showcase-stage {
+    grid-template-columns: 1fr;
+  }
+  .door-3d-wrapper {
+    order: -1;
+  }
+  .timemachine-layout {
+    grid-template-columns: 1fr;
+  }
+  .year-odometer-stage {
+    position: static;
+  }
+  .room-project-card {
+    grid-template-columns: 1fr;
+  }
+  .paper-hero-layout {
+    grid-template-columns: 1fr;
+  }
+  .hero-portrait-stage {
+    order: -1;
+  }
+}
+

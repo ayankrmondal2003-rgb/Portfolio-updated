@@ -60,7 +60,7 @@ function Field({ mode, active, host, onFailure }: Props) {
       positions[i * 3 + 1] = (random() - 0.5) * 11;
       positions[i * 3 + 2] = (random() - 0.5) * 5;
       const white = random() > 0.8;
-      colors.set(white ? [0.78, 0.85, 1] : [0.28, 0.49, 1], i * 3);
+      colors.set(white ? [0.90, 0.87, 0.76] : [0.58, 0.49, 0.28], i * 3);
     }
     return { positions, colors };
   }, [settings.count]);

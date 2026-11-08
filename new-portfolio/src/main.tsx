@@ -12,6 +12,8 @@ import "./styles/profile.css";
 import "./styles/editorial.css";
 import "./styles/particles.css";
 import "./styles/portraits.css";
+import "./styles/redesign.css";
+import "./styles/rishi-doors-theme.css";
 import App from "./App";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(

@@ -6,7 +6,7 @@ export function About() {
       <SectionHeading
         number="04"
         eyebrow="BEHIND THE CODE"
-        title="Curiosity is the starting point"
+        title="A little about the person"
       />
       <div className="about-portrait-layout">
         <figure className="profile-portrait about-portrait">

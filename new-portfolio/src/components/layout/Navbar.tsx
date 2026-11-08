@@ -3,6 +3,8 @@ import { ArrowUpRight, Menu, X } from "lucide-react";
 import { navigation, portfolio } from "../../data/portfolio";
 import { useActiveSection } from "../../hooks/useActiveSection";
 import { Container } from "./Container";
+import { LocalTimeBadge } from "../ui/LocalTimeBadge";
+import { HangingRopeSwitch } from "../ui/HangingRopeSwitch";
 
 export function Navbar() {
   const [open, setOpen] = useState(false);
@@ -46,58 +48,69 @@ export function Navbar() {
   };
 
   return (
-    <header
-      ref={headerRef}
-      className="site-header"
-      onBlur={(event) => {
-        if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
-      }}
-    >
-      <Container className="nav-container">
-        <a
-          href="#home"
-          className="wordmark"
-          aria-label={`AKM. — ${portfolio.profile.name}, home`}
-          onClick={() => navigate("home")}
-        >
-          AKM<span className="text-accent">.</span>
-        </a>
-        <button
-          ref={toggleRef}
-          type="button"
-          className="menu-toggle"
-          aria-label={open ? "Close navigation" : "Open navigation"}
-          aria-controls="primary-navigation"
-          aria-expanded={open}
-          onClick={() => setOpen((value) => !value)}
-        >
-          {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
-        </button>
-        <nav
-          id="primary-navigation"
-          aria-label="Primary navigation"
-          className={open ? "navigation is-open" : "navigation"}
-        >
-          <ul>
-            {navigation.map((item) => (
-              <li key={item.id}>
-                <a
-                  href={`#${item.id}`}
-                  aria-current={
-                    activeSection === item.id ? "location" : undefined
-                  }
-                  onClick={() => navigate(item.id)}
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
-          </ul>
-          <a className="nav-github" href={portfolio.socials[0].url}>
-            GitHub <ArrowUpRight size={15} aria-hidden="true" />
+    <>
+      <header
+        ref={headerRef}
+        className={activeSection === "home" ? "site-header" : "site-header is-dark"}
+        onBlur={(event) => {
+          if (!event.currentTarget.contains(event.relatedTarget)) setOpen(false);
+        }}
+      >
+        <Container className="nav-container">
+          <a
+            href="#home"
+            className="wordmark"
+            aria-label={`AKM. — ${portfolio.profile.name}, home`}
+            onClick={() => navigate("home")}
+          >
+            AKM<span className="text-accent">.</span>
           </a>
-        </nav>
-      </Container>
-    </header>
+
+          <button
+            ref={toggleRef}
+            type="button"
+            className="menu-toggle"
+            aria-label={open ? "Close navigation" : "Open navigation"}
+            aria-controls="primary-navigation"
+            aria-expanded={open}
+            onClick={() => setOpen((value) => !value)}
+          >
+            {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}
+          </button>
+
+          <nav
+            id="primary-navigation"
+            aria-label="Primary navigation"
+            className={open ? "navigation is-open" : "navigation"}
+          >
+            <ul>
+              {navigation.map((item) => (
+                <li key={item.id}>
+                  <a
+                    href={`#${item.id}`}
+                    aria-current={
+                      activeSection === item.id ? "location" : undefined
+                    }
+                    onClick={() => navigate(item.id)}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+
+            <div className="nav-right-cluster">
+              <LocalTimeBadge />
+              <a className="nav-github" href={portfolio.socials[0].url} target="_blank" rel="noreferrer">
+                GitHub <ArrowUpRight size={14} aria-hidden="true" />
+              </a>
+            </div>
+          </nav>
+        </Container>
+      </header>
+
+      {/* Hanging Rope Theme Switch - Fixed to Viewport Top Right */}
+      <HangingRopeSwitch />
+    </>
   );
 }

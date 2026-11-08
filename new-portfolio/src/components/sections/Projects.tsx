@@ -1,48 +1,41 @@
 import { ArrowUpRight } from "lucide-react";
 import { portfolio } from "../../data/portfolio";
-import { SectionHeading } from "../ui/SectionHeading";
+import { DoorsSection } from "./DoorsSection";
 import { ProjectCard } from "../ui/ProjectCard";
-import { FeaturedProjectCard } from "../ui/FeaturedProjectCard";
 import { ProjectCaseStudy } from "./ProjectCaseStudy";
+
 export function Projects() {
   return (
     <>
-      <div className="section-title-row">
-        <SectionHeading
-          number="01"
-          eyebrow="SELECTED WORK"
-          title="Ideas into practice"
-          description="Working software, hackathon starters, and ideas taking shape. Each project tells you exactly where it stands."
-        />
-        <a className="text-link" href={portfolio.socials[0].url}>
-          Explore GitHub <ArrowUpRight size={16} />
-        </a>
-      </div>
-      <div className="editorial-projects">
-        {portfolio.featuredProjects.map((project) => (
-          <FeaturedProjectCard key={project.slug} project={project} />
-        ))}
-      </div>
+      {/* 3D Doors Experience - "Magic happens behind the doors" */}
+      <DoorsSection />
+
+      {/* GitHub Repository Strip */}
       <div className="github-strip">
         <div>
           <p className="eyebrow">BUILDING IN THE OPEN</p>
           <h3>Follow the source.</h3>
           <p className="muted">
-            Explore repositories, implementation details, and the work behind
-            the interface.
+            Explore repositories, architecture discussions, and open-source contributions.
           </p>
         </div>
-        <a className="button button--secondary" href={portfolio.socials[0].url}>
+        <a
+          className="button button--secondary"
+          href={portfolio.socials[0].url}
+          target="_blank"
+          rel="noreferrer"
+        >
           GitHub profile <ArrowUpRight size={16} aria-hidden="true" />
         </a>
       </div>
+
+      {/* Earlier Projects Archive */}
       <details className="project-archive">
         <summary>
           Earlier projects <span className="mono">/ Archive</span>
         </summary>
         <p className="muted archive-note">
-          Retained from the previous portfolio. Additional source links and
-          contribution details are pending.
+          Software prototypes, hackathon builds, and academic milestones.
         </p>
         <div className="project-grid">
           {portfolio.projects.map((project) => (
@@ -50,6 +43,7 @@ export function Projects() {
           ))}
         </div>
       </details>
+
       <ProjectCaseStudy />
     </>
   );

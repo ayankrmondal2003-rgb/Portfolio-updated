@@ -7,7 +7,7 @@ export function Skills() {
       <SectionHeading
         number="02"
         eyebrow="THE TOOLKIT"
-        title="Always learning"
+        title="A toolkit for possibilities"
         description="Technologies used across the verified source and earlier project archive. No proficiency scores—just the tools and their context."
       />
       <div className="skills-grid">
