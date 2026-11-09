@@ -18,11 +18,14 @@ export function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
           {project.statusLabel}
         </span>
       </div>
+
       <ProjectImage project={project} />
+
       <div className="featured-copy">
         <p className="eyebrow">{project.category}</p>
         <h3 id={`title-${project.slug}`}>{project.title}</h3>
         <p className="project-description">{project.description}</p>
+
         <dl className="project-story">
           <div>
             <dt>THE PROBLEM</dt>
@@ -37,6 +40,7 @@ export function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
             <dd>{project.caseStudy.solution}</dd>
           </div>
         </dl>
+
         <div className="project-technologies">
           {project.technologies.length ? (
             project.technologies.map((tech) => (
@@ -48,6 +52,7 @@ export function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
             </span>
           )}
         </div>
+
         <div className="featured-actions">
           <a
             className="case-study-link"
@@ -61,12 +66,19 @@ export function FeaturedProjectCard({ project }: { project: FeaturedProject }) {
               <a
                 href={project.repository}
                 aria-label={`${project.title} GitHub repository`}
+                target="_blank"
+                rel="noreferrer"
               >
                 <Github size={16} aria-hidden="true" /> GitHub
               </a>
             )}
             {project.demo && (
-              <a href={project.demo} aria-label={`${project.title} live demo`}>
+              <a
+                href={project.demo}
+                aria-label={`${project.title} live demo`}
+                target="_blank"
+                rel="noreferrer"
+              >
                 Live <ArrowUpRight size={16} aria-hidden="true" />
               </a>
             )}

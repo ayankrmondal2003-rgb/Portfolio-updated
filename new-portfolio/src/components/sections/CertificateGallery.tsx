@@ -2,18 +2,26 @@ import { useState } from "react";
 import { ArrowUpRight, FileCheck2 } from "lucide-react";
 import { portfolio } from "../../data/portfolio";
 function CertificateImage({ src, title }: { src: string; title: string }) {
+  const [currentSrc, setCurrentSrc] = useState(src.replace(/\.jpg$/, ".webp"));
   const [failed, setFailed] = useState(false);
+
   return failed ? (
     <span className="certificate-empty">
       Preview unavailable. Try the document link.
     </span>
   ) : (
     <img
-      src={src.replace(/\.jpg$/, ".webp")}
+      src={currentSrc}
       alt={title + " — certificate issued to Ayan Kumar Mondal"}
       loading="lazy"
       decoding="async"
-      onError={() => setFailed(true)}
+      onError={() => {
+        if (currentSrc !== src) {
+          setCurrentSrc(src);
+        } else {
+          setFailed(true);
+        }
+      }}
     />
   );
 }

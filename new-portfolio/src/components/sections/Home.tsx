@@ -1,87 +1,90 @@
+import { useState } from "react";
 import { ArrowDown, ArrowUpRight } from "lucide-react";
 import { portfolio } from "../../data/portfolio";
 import { Container } from "../layout/Container";
 import { ButtonLink } from "../ui/Button";
-import { HeroAtmosphere } from "../ui/HeroAtmosphere";
+import { SpiralFlipNotebook } from "../ui/SpiralFlipNotebook";
+import { AbilityCardBadge, AbilityCardModal } from "../ui/AbilityCardModal";
 
 export function Home() {
+  const [isAbilityOpen, setIsAbilityOpen] = useState(false);
+
   return (
-    <section
-      id="home"
-      tabIndex={-1}
-      className="hero"
-      aria-labelledby="hero-heading"
-    >
-      <HeroAtmosphere />
+    <section id="home" tabIndex={-1} className="hero paper-hero" aria-labelledby="hero-heading">
       <Container>
-        <div className="portrait-hero-layout">
-          <div className="hero-introduction">
-            <div className="hero-topline">
-              <p className="eyebrow">
-                <span>01</span> / DEVELOPER PORTFOLIO
-              </p>
-              <span className="hero-index mono">CODE / CURIOSITY / CRAFT</span>
-            </div>
-            <div className="hero-content">
-              <p className="hero-name">
-                Ayan Kumar Mondal<span aria-hidden="true">.</span>
-              </p>
-              <h1 id="hero-heading">
-                Turning ideas into <span>intelligent</span> experiences.
-              </h1>
-              <div className="hero-details">
-                <div>
-                  <p className="hero-description">
-                    I build practical software and explore AI-driven solutions
-                    through projects, experiments, and hackathons.
-                  </p>
-                  <div className="hero-actions">
-                    <ButtonLink href="#projects">
-                      Explore My Work <ArrowDown size={18} aria-hidden="true" />
-                    </ButtonLink>
-                    <ButtonLink
-                      variant="secondary"
-                      href={portfolio.socials[0].url}
-                    >
-                      GitHub <ArrowUpRight size={18} aria-hidden="true" />
-                    </ButtonLink>
-                  </div>
-                </div>
-                <ul className="identity-labels" aria-label="Areas of focus">
-                  <li>
-                    <span aria-hidden="true">01 /</span> AI / ML
-                  </li>
-                  <li>
-                    <span aria-hidden="true">02 /</span> Software Development
-                  </li>
-                  <li>
-                    <span aria-hidden="true">03 /</span> Hackathons
-                  </li>
-                </ul>
-              </div>
+        <div className="paper-hero-layout">
+          {/* Left Column: Greeting, 3D Flip Notebook Calendar, CTAs */}
+          <div className="paper-introduction">
+            <p className="eyebrow">
+              <span className="status-dot live-pulse" />
+              <span>• Independent Freelancer & Student Engineer</span>
+            </p>
+            <h1 id="hero-heading">
+              Hi, I’m Ayan.
+              <br />
+              <span>I am a</span>
+            </h1>
+
+            {/* 3D Wire-O Flip Notebook Widget */}
+            <SpiralFlipNotebook />
+
+            <p className="paper-description">
+              Turning ideas into intelligent experiences. I build practical software,
+              interactive web applications, and explore AI-driven solutions through
+              projects, hackathons, and experiments.
+            </p>
+
+            <div className="hero-actions">
+              <ButtonLink href="#doors">
+                See my work <ArrowDown size={18} aria-hidden="true" />
+              </ButtonLink>
+              <ButtonLink variant="secondary" href={portfolio.socials[0].url} target="_blank" rel="noreferrer">
+                GitHub <ArrowUpRight size={18} aria-hidden="true" />
+              </ButtonLink>
+              {portfolio.profile.resume.url && (
+                <ButtonLink variant="secondary" href={portfolio.profile.resume.url} target="_blank" rel="noreferrer">
+                  CV / Resume <ArrowUpRight size={18} aria-hidden="true" />
+                </ButtonLink>
+              )}
             </div>
           </div>
-          <figure className="profile-portrait hero-portrait">
-            <img
-              src="/images/profile/hero.webp"
-              width={638}
-              height={781}
-              alt="Black-and-white studio portrait of Ayan Kumar Mondal wearing glasses and a dark shirt."
-              fetchPriority="high"
-              loading="eager"
-              decoding="async"
-            />
-          </figure>
+
+          {/* Right Column: Studio Portrait Cutout + Floating Ability Badge */}
+          <div className="hero-portrait-stage">
+            <figure className="paper-portrait">
+              <img
+                src="/images/profile/hero.webp"
+                width={638}
+                height={781}
+                alt="Studio portrait of Ayan Kumar Mondal wearing glasses and a dark shirt."
+                fetchPriority="high"
+                loading="eager"
+                decoding="async"
+                className="portrait-cutout-img"
+              />
+              <figcaption>
+                <span className="mono">THE PERSON BEHIND THE CODE</span>
+                <span>Ayan Kumar Mondal ↗</span>
+              </figcaption>
+
+              {/* Pinned "My ability card" Floating Pill Badge */}
+              <div className="ability-badge-pin">
+                <AbilityCardBadge onClick={() => setIsAbilityOpen(true)} />
+              </div>
+            </figure>
+          </div>
         </div>
-        <div className="hero-bottom">
-          <p>
-            <span aria-hidden="true">↳</span> {portfolio.profile.institution}
-          </p>
-          <a href="#projects" className="scroll-indicator mono">
-            SCROLL TO EXPLORE <ArrowDown size={16} aria-hidden="true" />
-          </a>
+
+        {/* Hero Bottom Ticker */}
+        <div className="paper-hero-footer mono">
+          <span>AVAILABLE FOR WORK</span>
+          <span>REMOTE-FIRST, WORLDWIDE</span>
+          <a href="#doors">SCROLL TO EXPLORE ↓</a>
         </div>
       </Container>
+
+      {/* Ability Card Modal */}
+      <AbilityCardModal isOpen={isAbilityOpen} onClose={() => setIsAbilityOpen(false)} />
     </section>
   );
 }

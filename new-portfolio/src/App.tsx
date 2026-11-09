@@ -1,3 +1,4 @@
+import { ThemeProvider } from "./context/ThemeProvider";
 import { Navbar } from "./components/layout/Navbar";
 import { Footer } from "./components/layout/Footer";
 import { Container } from "./components/layout/Container";
@@ -8,7 +9,6 @@ import { Skills } from "./components/sections/Skills";
 import { Achievements } from "./components/sections/Achievements";
 import { About } from "./components/sections/About";
 import { Contact } from "./components/sections/Contact";
-
 import { useEditorialMotion } from "./hooks/useEditorialMotion";
 
 const sections = [
@@ -18,10 +18,12 @@ const sections = [
   { id: "about", Content: About },
   { id: "contact", Content: Contact },
 ];
+
 export default function App() {
   useEditorialMotion();
+
   return (
-    <>
+    <ThemeProvider>
       <a className="skip-link" href="#main">
         Skip to content
       </a>
@@ -40,6 +42,6 @@ export default function App() {
         </Container>
       </main>
       <Footer />
-    </>
+    </ThemeProvider>
   );
 }

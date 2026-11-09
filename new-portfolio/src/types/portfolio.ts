@@ -25,7 +25,7 @@ export interface FeaturedProject extends Project {
     features: string[];
     architecture: string[];
     contribution: string;
-    contributionTodo: Todo;
+    contributionTodo?: Todo;
     challenges: string;
     lessons: string;
   };
@@ -40,7 +40,7 @@ export interface Portfolio {
     biography: Todo | string;
     location: string;
     educationYears: string;
-    resume: { url?: string; todo: Todo };
+    resume: { url?: string; todo?: Todo };
   };
   socials: { label: string; url: string }[];
   projects: Project[];
