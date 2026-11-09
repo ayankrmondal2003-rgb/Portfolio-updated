@@ -5,7 +5,7 @@
 **Full-Stack Developer & Machine Learning Practitioner**  
 *B.Tech CSE (AI & ML) • Haldia Institute of Technology • Kolkata, India*
 
-[![Live Demo](https://img.shields.io/badge/Demo-Live_Portfolio-2ea44f?style=for-the-badge&logo=vercel)](https:portfolio-ayankumar.vercel.app/)
+[![Live Demo](https://img.shields.io/badge/Demo-Live_Portfolio-2ea44f?style=for-the-badge&logo=vercel)](https://portfolio-ayankumar.vercel.app/)
 [![React](https://img.shields.io/badge/React-19.0-61DAFB?style=for-the-badge&logo=react)](https://react.dev/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.9-3178C6?style=for-the-badge&logo=typescript)](https://www.typescriptlang.org/)
 [![Vite](https://img.shields.io/badge/Vite-6.4-646CFF?style=for-the-badge&logo=vite)](https://vitejs.dev/)
