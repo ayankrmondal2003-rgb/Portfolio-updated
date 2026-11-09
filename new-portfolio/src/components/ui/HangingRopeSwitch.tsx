@@ -1,5 +1,11 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useTheme } from "../../hooks/useTheme";
+import {
+  playRopePull,
+  playBeadTick,
+  playLampPullFull,
+  preloadLampAudio,
+} from "../../lib/soundEffects";
 
 const RESTING_LENGTH = 200;
 const MAX_PULL = 280;
@@ -10,7 +16,14 @@ export function HangingRopeSwitch() {
   const [isPulling, setIsPulling] = useState(false);
   const [isRebounding, setIsRebounding] = useState(false);
   const startYRef = useRef(0);
+  const lastBeadYRef = useRef(0);
+  const hasDraggedRef = useRef(false);
   const animationFrameRef = useRef<number | null>(null);
+
+  // Preload real YouTube sound effects on mount
+  useEffect(() => {
+    preloadLampAudio();
+  }, []);
 
   // Elastic snap-back spring simulation
   const triggerSpring = useCallback(() => {
@@ -19,13 +32,13 @@ export function HangingRopeSwitch() {
 
     toggleTheme();
 
-    const initialOffset = length - RESTING_LENGTH;
+    const initialOffset = Math.max(0, length - RESTING_LENGTH);
     const startTime = performance.now();
-    const duration = 850;
-    const stiffness = 0.04;
-    const damping = 0.86;
+    const duration = 650;
+    const stiffness = 0.05;
+    const damping = 0.82;
 
-    let velocity = -initialOffset * stiffness * 14;
+    let velocity = -initialOffset * stiffness * 10;
     let currentOffset = initialOffset;
 
     const animate = (time: number) => {
@@ -40,7 +53,9 @@ export function HangingRopeSwitch() {
       velocity = (velocity + acceleration) * damping;
       currentOffset += velocity;
 
-      setLength(RESTING_LENGTH + currentOffset);
+      // Ensure the rope never pushes upward past the resting length minus a subtle 5px rebound
+      const clampedOffset = Math.max(-5, currentOffset);
+      setLength(RESTING_LENGTH + clampedOffset);
       animationFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -58,15 +73,31 @@ export function HangingRopeSwitch() {
     (e.target as HTMLElement).setPointerCapture(e.pointerId);
     setIsPulling(true);
     setIsRebounding(false);
+    hasDraggedRef.current = false;
     startYRef.current = e.clientY;
+    lastBeadYRef.current = e.clientY;
   };
 
   const handlePointerMove = (e: React.PointerEvent) => {
     if (!isPulling) return;
     const deltaY = e.clientY - startYRef.current;
-    if (deltaY > 0) {
+    if (deltaY > 2) {
+      if (!hasDraggedRef.current) {
+        hasDraggedRef.current = true;
+        // Play real string pull friction as the rope is pulled down
+        playRopePull();
+      }
       const stretch = Math.min(MAX_PULL, RESTING_LENGTH + deltaY * 0.75);
       setLength(stretch);
+
+      // Micro bead ticks as chain passes through
+      if (Math.abs(e.clientY - lastBeadYRef.current) >= 8) {
+        lastBeadYRef.current = e.clientY;
+        playBeadTick();
+      }
+    } else {
+      // Firmly keep handle anchored at RESTING_LENGTH if moved upward
+      setLength(RESTING_LENGTH);
     }
   };
 
@@ -83,10 +114,12 @@ export function HangingRopeSwitch() {
   const handleClick = (e: React.MouseEvent) => {
     if (isRebounding || isPulling) return;
     e.stopPropagation();
-    setLength(RESTING_LENGTH + 40);
+    // Play the full authentic pull-and-click sound from YouTube
+    playLampPullFull();
+    setLength(RESTING_LENGTH + 42);
     setTimeout(() => {
       triggerSpring();
-    }, 60);
+    }, 110);
   };
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
@@ -151,64 +184,53 @@ export function HangingRopeSwitch() {
           strokeLinecap="round"
         />
 
-        {/* The Ball Chain Beads along the middle */}
-        {beads.map((beadY, idx) => (
+        {/* Ball Chain Beads */}
+        {beads.map((y, idx) => (
           <circle
             key={idx}
             cx="18"
-            cy={beadY}
-            r="2.6"
+            cy={y}
+            r="2.8"
             fill="url(#ballBeadGrad)"
-            stroke="#4A3008"
-            strokeWidth="0.6"
+            stroke="#54370C"
+            strokeWidth="0.5"
           />
         ))}
 
-        {/* Lower brass collar ring (ferrule connector) */}
-        <rect
-          x="13.5"
-          y={length - 6}
-          width="9"
-          height="7"
-          rx="2"
-          fill="url(#brassBob)"
-          stroke="#54370C"
-          strokeWidth="0.8"
-        />
-
-        {/* 3D Brass/Turned Wood Teardrop Handle */}
+        {/* Solid Brass Pull Handle / Acorn Tassel */}
         <g
-          className="rope-handle-group"
+          transform={`translate(18, ${length})`}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerCancel={handlePointerUp}
+          className="rope-handle-group"
           style={{ cursor: isPulling ? "grabbing" : "grab" }}
         >
-          {/* Main Teardrop Capsule */}
-          <path
-            d={`M 18 ${length} 
-               C 11 ${length + 9}, 10 ${length + 20}, 13.5 ${length + 29}
-               C 15.5 ${length + 33}, 20.5 ${length + 33}, 22.5 ${length + 29}
-               C 26 ${length + 20}, 25 ${length + 9}, 18 ${length} Z`}
-            fill="url(#brassBob)"
-            stroke="#4A3008"
-            strokeWidth="1.2"
-          />
+          <g className="rope-handle-inner">
+            {/* Tassel Coupling Collar */}
+            <rect x="-4" y="0" width="8" height="4" rx="1.5" fill="#54370C" />
 
-          {/* Specular Highlight Reflection on handle */}
-          <ellipse
-            cx="15.8"
-            cy={length + 15}
-            rx="2.2"
-            ry="8.5"
-            fill="rgba(255, 255, 240, 0.7)"
-            transform={`rotate(-14 15.8 ${length + 15})`}
-          />
+            {/* Main Solid Brass Teardrop Acorn */}
+            <path
+              d="M 0,2 
+                 C 6,4 10,12 8,24 
+                 C 7,30 4,36 0,38 
+                 C -4,36 -7,30 -8,24 
+                 C -10,12 -6,4 0,2 Z"
+              fill="url(#brassBob)"
+              stroke="#54370C"
+              strokeWidth="0.75"
+              filter="drop-shadow(0px 3px 6px rgba(0,0,0,0.45))"
+            />
 
-          {/* Bottom terminal bead ring */}
-          <circle cx="18" cy={length + 31} r="2.8" fill="#54370C" />
-          <circle cx="18" cy={length + 31} r="1.8" fill="#D4A745" />
+            {/* Decorative Ring Grooves */}
+            <line x1="-6.5" y1="14" x2="6.5" y2="14" stroke="#FFF4B8" strokeWidth="0.8" opacity="0.6" />
+            <line x1="-7" y1="18" x2="7" y2="18" stroke="#54370C" strokeWidth="0.8" opacity="0.7" />
+
+            {/* Bottom Brass Bell Finial */}
+            <circle cx="0" cy="38" r="2.5" fill="#E5BE5E" stroke="#54370C" strokeWidth="0.5" />
+          </g>
         </g>
       </svg>
     </div>

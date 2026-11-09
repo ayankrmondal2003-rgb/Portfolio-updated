@@ -107,11 +107,13 @@ body {
   display: block;
 }
 
-.rope-handle-group {
-  transition: transform 0.1s ease-out;
+.rope-handle-inner {
+  transform-origin: 0 20px;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s ease;
 }
-.hanging-rope-container:hover .rope-handle-group {
-  transform: scale(1.04);
+.hanging-rope-container:hover .rope-handle-inner {
+  transform: scale(1.06);
+  filter: drop-shadow(0 4px 10px rgba(216, 196, 148, 0.4));
 }
 
 /* --------------------------------------------------------------------------
@@ -2235,99 +2237,194 @@ html.light .section-heading h2 .text-accent {
   color: #f1d59b !important;
 }
 
-/* ABOUT SECTION & TEAM SHOWCASE: Paper Spread Styling (Consistent High Contrast in Both Modes) */
+/* ABOUT SECTION & TEAM SHOWCASE: Dual-Theme Styling (High-Contrast Dark Mode & Classic Paper Light Mode) */
 #about {
   background: var(--paper, #eee8d8) !important;
   color: #1f241c !important;
 }
 
-#about .section-heading .eyebrow,
-#about .eyebrow {
+/* Light Theme Styling for About Section */
+html.light #about {
+  background: var(--paper, #eee8d8) !important;
+  color: #1f241c !important;
+}
+
+html.light #about .section-heading .eyebrow,
+html.light #about .eyebrow {
   color: #4b5240 !important;
   font-weight: 700 !important;
   letter-spacing: 0.1em;
 }
 
-#about .section-heading .eyebrow span {
+html.light #about .section-heading .eyebrow span {
   color: #383f2e !important;
   font-weight: 800 !important;
 }
 
-#about .section-heading h2 {
+html.light #about .section-heading h2 {
   color: #11140e !important;
   font-weight: 700 !important;
 }
 
-#about .section-heading h2 .text-accent {
+html.light #about .section-heading h2 .text-accent {
   color: #4b5240 !important;
 }
 
-#about .about-copy > p,
-html.dark #about .about-copy > p,
-html.light #about .about-copy > p,
-.about-copy > p {
+html.light #about .about-portrait {
+  background: #d4cebd !important;
+  box-shadow: 4px 5px 0 #beb8a5 !important;
+}
+
+html.light #about .about-copy > p {
   color: #1f241c !important;
   font-size: 16px;
   line-height: 1.85;
   font-weight: 450;
 }
 
-#about .about-facts,
-html.dark #about .about-facts,
-html.light #about .about-facts,
-.about-facts {
+html.light #about .about-facts {
   border-color: rgba(31, 36, 28, 0.18) !important;
 }
 
-#about .about-facts dt,
-html.dark #about .about-facts dt,
-html.light #about .about-facts dt,
-.about-facts dt {
+html.light #about .about-facts dt {
   color: #4b5240 !important;
   font-weight: 700 !important;
   font-size: 11px;
   letter-spacing: 0.12em;
 }
 
-#about .about-facts dd,
-html.dark #about .about-facts dd,
-html.light #about .about-facts dd,
-.about-facts dd {
+html.light #about .about-facts dd {
   color: #11140e !important;
   font-weight: 600 !important;
   font-size: 14.5px;
 }
 
-/* TEAM SHOWCASE (Inside About Section) */
-html.dark .team-showcase {
-  background: #141418 !important;
-  border: 1px solid rgba(255, 255, 255, 0.12) !important;
-  border-radius: 12px;
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.35);
+html.light #about .about-facts .document-link {
+  color: #3b5030 !important;
+  font-weight: 600 !important;
 }
 
-html.dark .team-showcase h3 {
+html.light #about .about-facts .document-link:hover {
+  color: #11140e !important;
+}
+
+/* Dark Theme Styling for About Section */
+html.dark #about {
+  background: #0f1015 !important;
+  background-image: radial-gradient(ellipse at 30% 20%, #171924 0%, #0f1015 70%) !important;
+  color: #ededed !important;
+  border: 1px solid rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark #about .section-heading .eyebrow,
+html.dark #about .eyebrow {
+  color: #d8c494 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em;
+}
+
+html.dark #about .section-heading .eyebrow span,
+html.dark #about .eyebrow span {
+  color: #f1d59b !important;
+  font-weight: 800 !important;
+}
+
+html.dark #about .section-heading h2,
+html.dark #about h2 {
   color: #ffffff !important;
   font-weight: 700 !important;
 }
 
-html.dark .team-showcase .eyebrow {
-  color: #f1d59b !important;
-  font-weight: 600 !important;
+html.dark #about .section-heading h2 .text-accent {
+  color: #d8c494 !important;
 }
 
-html.dark .team-showcase .muted,
-html.dark .team-showcase p {
+html.dark #about .about-portrait {
+  background: #1a1c24 !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.75), 4px 6px 0 rgba(0, 0, 0, 0.5) !important;
+}
+
+html.dark #about .about-copy > p {
   color: #d1d5db !important;
+  font-size: 16px;
+  line-height: 1.85;
+  font-weight: 450;
 }
 
-html.dark .team-members li {
-  color: #ededed !important;
+html.dark #about .about-copy > p strong {
+  color: #ffffff !important;
+}
+
+html.dark #about .about-facts {
   border-color: rgba(255, 255, 255, 0.12) !important;
 }
 
-html.dark .team-members li .muted {
-  color: #f1d59b !important;
+html.dark #about .about-facts dt {
+  color: #d8c494 !important;
+  font-weight: 700 !important;
+  font-size: 11px;
+  letter-spacing: 0.12em;
+}
+
+html.dark #about .about-facts dd {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+  font-size: 14.5px;
+}
+
+html.dark #about .about-facts .document-link {
+  color: #d8c494 !important;
+  font-weight: 600 !important;
+  transition: color 0.2s ease, transform 0.2s ease;
+}
+
+html.dark #about .about-facts .document-link:hover {
+  color: #ffffff !important;
+}
+
+/* TEAM SHOWCASE (Inside About Section) */
+html.dark .team-showcase,
+html.dark #about .team-showcase {
+  background: #15161f !important;
+  border: 1px solid rgba(255, 255, 255, 0.12) !important;
+  border-radius: 12px;
+  box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45) !important;
+}
+
+html.dark .team-showcase h3,
+html.dark #about .team-showcase h3 {
+  color: #ffffff !important;
+  font-weight: 700 !important;
+}
+
+html.dark .team-showcase .eyebrow,
+html.dark #about .team-showcase .eyebrow {
+  color: #d8c494 !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.12em;
+}
+
+html.dark .team-showcase .muted,
+html.dark .team-showcase p,
+html.dark #about .team-showcase .muted,
+html.dark #about .team-showcase p {
+  color: #c5cad3 !important;
+  line-height: 1.7;
+}
+
+html.dark .team-members li,
+html.dark #about .team-members li {
+  color: #ffffff !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  font-weight: 600 !important;
+}
+
+html.dark .team-members li .muted,
+html.dark #about .team-members li .muted {
+  color: #d8c494 !important;
+  font-weight: 600 !important;
 }
 
 html.light .team-showcase {
@@ -2973,7 +3070,7 @@ html.light .project-archive .archive-note {
 }
 
 /* --------------------------------------------------------------------------
-   LIVE GITHUB SHOWCASE SECTION (2-COLUMN FULL-WIDTH DASHBOARD)
+   LIVE GITHUB SHOWCASE (2-COLUMN DASHBOARD - EXACT MATCH TO SCREENSHOT)
    -------------------------------------------------------------------------- */
 .github-showcase-section {
   margin-top: clamp(40px, 5vw, 64px);
@@ -2988,22 +3085,23 @@ html.light .project-archive .archive-note {
   width: 100%;
 }
 
-@media (min-width: 1100px) {
+@media (min-width: 1080px) {
   .github-showcase-grid {
-    grid-template-columns: 340px 1fr;
-    gap: 24px;
+    grid-template-columns: 320px 1fr;
+    gap: 20px;
     align-items: stretch;
   }
 }
 
-/* Left Column: Overview Card */
+/* Left Column: Overview Card matching screenshot */
 .github-overview-card {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   border-radius: 14px;
-  padding: clamp(20px, 2.5vw, 26px);
+  padding: clamp(20px, 2.5vw, 24px);
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  box-sizing: border-box;
 }
 
 html.dark .github-overview-card {
@@ -3276,13 +3374,15 @@ html.light .github-sync-mini-btn:hover {
 
 /* Right Column: Calendar Card */
 .github-contributions-card {
+  width: 100%;
+  border-radius: 14px;
+  padding: clamp(20px, 2.5vw, 24px);
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  border-radius: 14px;
-  padding: clamp(18px, 2.5vw, 24px);
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
   min-width: 0;
+  box-sizing: border-box;
 }
 
 html.dark .github-contributions-card {
@@ -3761,3 +3861,139 @@ html.light .legend-box.level-1 { background: #fed7aa; }
 html.light .legend-box.level-2 { background: #fb923c; }
 html.light .legend-box.level-3 { background: #ea580c; }
 html.light .legend-box.level-4 { background: #c2410c; }
+
+
+/* --------------------------------------------------------------------------
+   HERO SECTION DARK MODE COMPATIBILITY
+   -------------------------------------------------------------------------- */
+html.dark .paper-hero {
+  background: #0a0a0c !important;
+  color: #ededed !important;
+  background-image: radial-gradient(ellipse at 40% 25%, #181a22 0%, #0a0a0c 70%) !important;
+}
+
+html.dark .paper-hero::before {
+  display: none !important;
+}
+
+html.dark .paper-hero .eyebrow {
+  color: #d8c494 !important;
+}
+
+html.dark .paper-hero .eyebrow span {
+  color: #d8c494 !important;
+}
+
+html.dark .paper-hero .status-dot {
+  background: #10b981 !important;
+  box-shadow: 0 0 10px #10b981 !important;
+}
+
+html.dark .paper-hero h1 {
+  color: #ffffff !important;
+}
+
+html.dark .paper-hero h1 > span {
+  color: #d8c494 !important;
+}
+
+html.dark .paper-description {
+  color: #c9d1d9 !important;
+}
+
+/* Hero Action Buttons in Dark Mode */
+html.dark .paper-hero .button--primary {
+  background: #d8c494 !important;
+  color: #111111 !important;
+  border: 1px solid #d8c494 !important;
+  font-weight: 600 !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark .paper-hero .button--primary:hover {
+  background: #f1d59b !important;
+  border-color: #f1d59b !important;
+  color: #000000 !important;
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 24px rgba(216, 196, 148, 0.35) !important;
+}
+
+html.dark .paper-hero .button--secondary {
+  background: rgba(255, 255, 255, 0.05) !important;
+  border-color: rgba(255, 255, 255, 0.16) !important;
+  color: #ededed !important;
+  transition: all 0.2s ease !important;
+}
+
+html.dark .paper-hero .button--secondary:hover {
+  background: rgba(255, 255, 255, 0.12) !important;
+  border-color: rgba(255, 255, 255, 0.3) !important;
+  color: #ffffff !important;
+  transform: translateY(-1px) !important;
+}
+
+/* Hero Portrait / Polaroid in Dark Mode */
+html.dark .paper-portrait {
+  background: #16181f !important;
+  border: 1px solid rgba(255, 255, 255, 0.14) !important;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.06) !important;
+}
+
+html.dark .paper-portrait figcaption {
+  color: #ffffff !important;
+}
+
+html.dark .paper-portrait figcaption .mono {
+  color: #d8c494 !important;
+}
+
+html.dark .paper-portrait figcaption span:not(.mono) {
+  color: #ffffff !important;
+  font-weight: 600 !important;
+}
+
+/* Hero Flip Notebook in Dark Mode */
+html.dark .spiral-notebook-widget .notebook-card-surface {
+  background: #141418 !important;
+  border-color: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: 0 14px 34px rgba(0, 0, 0, 0.6) !important;
+}
+
+html.dark .spiral-notebook-widget:hover .notebook-card-surface {
+  box-shadow: 0 20px 44px rgba(0, 0, 0, 0.75), 0 0 0 1px rgba(216, 196, 148, 0.2) !important;
+}
+
+html.dark .spiral-notebook-widget .role-sublabel {
+  color: #ff8c2a !important;
+}
+
+html.dark .spiral-notebook-widget .role-headline {
+  color: #ffffff !important;
+}
+
+html.dark .spiral-notebook-widget .page-counter {
+  color: #9ca3af !important;
+}
+
+html.dark .spiral-notebook-widget .stack-layer {
+  background: #1c1d24 !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
+
+/* Hero Footer / Ticker in Dark Mode */
+html.dark .paper-hero-footer {
+  border-top: 1px solid rgba(255, 255, 255, 0.1) !important;
+  color: #9ca3af !important;
+}
+
+html.dark .paper-hero-footer span {
+  color: #9ca3af !important;
+}
+
+html.dark .paper-hero-footer a {
+  color: #d8c494 !important;
+}
+
+html.dark .paper-hero-footer a:hover {
+  color: #ffffff !important;
+}

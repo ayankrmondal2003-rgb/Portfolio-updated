@@ -30,7 +30,7 @@ const OFFSET_Y = 22;
 export function GithubContributions({ username = "ayankrmondal2003-rgb" }: GithubContributionsProps) {
   const [data, setData] = useState<ContributionsData>(fallbackJson as ContributionsData);
   const [isSyncing, setIsSyncing] = useState(false);
-  const [lastSyncTime, setLastSyncTime] = useState<string>("Live");
+  const [lastSyncTime, setLastSyncTime] = useState<string>("Synced just now");
   const [hoveredCell, setHoveredCell] = useState<{
     date: string;
     count: number;
@@ -40,22 +40,84 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
   } | null>(null);
 
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const CACHE_KEY = `gh_contribs_v2_${username}`;
+  const lastFetchTimeRef = useRef<number>(0);
+  const CACHE_KEY = `gh_contribs_v7_${username}`;
 
-  // Fetch contributions from live API
+  // Fetch contributions from live API with automatic fallback provider
   const syncLiveContributions = useCallback(async (manual = false) => {
+    const nowMs = Date.now();
+    // Prevent rapid duplicate requests within 15 seconds unless manually clicked
+    if (!manual && nowMs - lastFetchTimeRef.current < 15000) {
+      return;
+    }
+    lastFetchTimeRef.current = nowMs;
+
     if (manual) setIsSyncing(true);
     try {
-      const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
-      if (!res.ok) throw new Error(`HTTP error ${res.status}`);
-      const json: ContributionsData = await res.json();
-      if (json && Array.isArray(json.contributions) && json.contributions.length > 0) {
-        setData(json);
-        const now = new Date();
-        const timeStr = now.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
+      const currentYear = new Date().getFullYear();
+      let contributions: ContributionDay[] | null = null;
+      let totalCount = 0;
+
+      // Provider 1: jogruber API
+      try {
+        const res = await fetch(`https://github-contributions-api.jogruber.de/v4/${username}?y=last`);
+        if (res.ok) {
+          const json: ContributionsData = await res.json();
+          if (json && Array.isArray(json.contributions) && json.contributions.length > 0) {
+            contributions = json.contributions;
+            totalCount = json.total?.lastYear ?? contributions.reduce((s, c) => s + c.count, 0);
+          }
+        }
+      } catch (err) {
+        console.warn("Primary GitHub API failed, attempting secondary provider:", err);
+      }
+
+      // Provider 2: rschristian API (reliable fallback if primary is rate-limited)
+      if (!contributions) {
+        try {
+          const resBackup = await fetch(`https://gh-calendar.rschristian.dev/user/${username}`);
+          if (resBackup.ok) {
+            const jsonBackup = await resBackup.json();
+            if (Array.isArray(jsonBackup?.contributions)) {
+              const flat: ContributionDay[] = jsonBackup.contributions
+                .flat()
+                .map((c: { date: string; intensity: string; count: number }) => ({
+                  date: c.date,
+                  count: c.count,
+                  level: Math.min(4, Math.max(0, parseInt(c.intensity, 10) || 0)),
+                }));
+              if (flat.length > 0) {
+                contributions = flat;
+                totalCount = typeof jsonBackup.total === "number" ? jsonBackup.total : flat.reduce((s, c) => s + c.count, 0);
+              }
+            }
+          }
+        } catch (backupErr) {
+          console.warn("Backup GitHub API also failed:", backupErr);
+        }
+      }
+
+      if (contributions && contributions.length > 0) {
+        const sumCount = contributions.reduce((acc, c) => acc + c.count, 0);
+        const resolvedTotal = totalCount > 0 ? totalCount : sumCount;
+
+        const mergedPayload: ContributionsData = {
+          total: {
+            lastYear: resolvedTotal,
+            [String(currentYear)]: resolvedTotal,
+          },
+          contributions,
+        };
+
+        setData(mergedPayload);
+        const dateObj = new Date();
+        const timeStr = dateObj.toLocaleTimeString([], { hour: "2-digit", minute: "2-digit" });
         setLastSyncTime(`Synced at ${timeStr}`);
         try {
-          localStorage.setItem(CACHE_KEY, JSON.stringify({ data: json, timestamp: Date.now() }));
+          localStorage.setItem(
+            CACHE_KEY,
+            JSON.stringify({ data: mergedPayload, timeStr, timestamp: Date.now() })
+          );
         } catch {
           // ignore quota issues
         }
@@ -78,21 +140,21 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
         const parsed = JSON.parse(cached);
         if (parsed?.data?.contributions?.length) {
           setData(parsed.data);
+          if (parsed.timeStr) {
+            setLastSyncTime(`Synced at ${parsed.timeStr}`);
+          }
         }
       }
     } catch {
       // ignore
     }
 
-    // Immediate background fetch
     syncLiveContributions(false);
 
-    // Auto-update every 5 minutes
     const interval = setInterval(() => {
       syncLiveContributions(false);
     }, 5 * 60 * 1000);
 
-    // Re-sync on window focus or visibility change
     const handleVisibility = () => {
       if (document.visibilityState === "visible") {
         syncLiveContributions(false);
@@ -129,7 +191,6 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
     const calculatedWeeks: (ContributionDay | null)[][] = [];
     let currentWeek: (ContributionDay | null)[] = [];
 
-    // Pad days before start
     for (let i = 0; i < firstDayOfWeek; i++) {
       currentWeek.push(null);
     }
@@ -152,7 +213,7 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
       calculatedWeeks.push(currentWeek);
     }
 
-    // Determine month labels
+    // Determine month labels (Nov, Dec, Jan, Feb, ..., Nov)
     const labels: { weekIndex: number; label: string }[] = [];
     let prevMonth = -1;
 
@@ -170,12 +231,15 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
       }
     });
 
-    const displayTotal = data.total?.lastYear ?? calculatedTotal;
+    const displayTotal =
+      data.total?.lastYear ??
+      data.total?.[String(new Date().getFullYear())] ??
+      calculatedTotal;
 
     return {
       weeks: calculatedWeeks,
       monthLabels: labels,
-      totalContributions: displayTotal,
+      totalContributions: calculatedTotal > 0 ? calculatedTotal : displayTotal,
     };
   }, [data]);
 
@@ -197,9 +261,9 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
   };
 
   return (
-    <section className="github-showcase-section" aria-label="GitHub Contributions and Open Source Activity">
+    <section className="github-showcase-section" aria-label="GitHub Live Activity and Contributions">
       <div className="github-showcase-grid">
-        {/* Left Column: Open Source Narrative & Profile Card */}
+        {/* Left Column: Same Box as in Screenshot */}
         <div className="github-overview-card">
           <div className="github-overview-top">
             <div className="github-status-chip">
@@ -223,7 +287,7 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
           </div>
 
           <div className="github-overview-body">
-            <p className="eyebrow">BUILDING IN THE OPEN</p>
+            <p className="eyebrow mono">BUILDING IN THE OPEN</p>
             <h3 className="github-overview-title">Follow the source.</h3>
             <p className="github-overview-copy">
               Explore public codebases, AI pipelines, system architectures, and verified commits.
@@ -270,9 +334,9 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
           </div>
         </div>
 
-        {/* Right Column: Snug, Live Contribution Calendar Card */}
+        {/* Right Column: Live Contribution Calendar Card */}
         <div className="github-contributions-card">
-          {/* Card Header */}
+          {/* Card Header matching screenshot */}
           <div className="github-card-header">
             <div className="github-header-left">
               <div className="github-eyebrow-row">
@@ -281,7 +345,7 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
                 <span className="mono github-sync-tag">{lastSyncTime}</span>
               </div>
               <h3 className="github-card-title">
-                <span className="github-count-highlight">{totalContributions}</span> contributions in the last year
+                <span className="github-count-highlight">{totalContributions}</span> contributions in {new Date().getFullYear()}
               </h3>
               <p className="github-card-subtitle mono">
                 Automatically synced with GitHub activity
@@ -289,7 +353,7 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
             </div>
           </div>
 
-          {/* Contribution Calendar Scroll Area */}
+          {/* Contribution Calendar Viewport (orange dots box area) */}
           <div
             className="github-calendar-viewport"
             ref={scrollContainerRef}
@@ -302,9 +366,9 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
                 height={svgHeight}
                 viewBox={`0 0 ${svgWidth} ${svgHeight}`}
                 role="img"
-                aria-label={`GitHub contribution calendar: ${totalContributions} contributions in the last year`}
+                aria-label={`GitHub contribution calendar: ${totalContributions} contributions in 2026`}
               >
-                {/* Month Labels */}
+                {/* Month Labels: Nov Dec Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov */}
                 {monthLabels.map(({ weekIndex, label }) => (
                   <text
                     key={`${weekIndex}-${label}`}
@@ -389,7 +453,7 @@ export function GithubContributions({ username = "ayankrmondal2003-rgb" }: Githu
             </div>
           </div>
 
-          {/* Card Footer */}
+          {/* Card Footer matching screenshot */}
           <div className="github-card-footer">
             <a
               href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/managing-contribution-settings-on-your-profile/why-are-my-contributions-not-showing-up-on-my-profile"
