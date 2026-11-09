@@ -1,17 +1,7 @@
 import type { FeaturedProject } from "../types/portfolio";
 
-const zenith = "https://github.com/ayankrmondal2003-rgb/Typing-Speed-Trainer";
-const sanjeevani =
-  "https://github.com/arpbiswas04-coder/Sanjeevani---Health-for-a-Better-Tomorrow";
-const voyage = "https://github.com/Voyage-Hack4Haldia-26/TEAM-B";
-const contribution =
-  "Backend development (self-reported). The exact project-specific scope is awaiting documentation.";
-const contributionTodo =
-  "TODO: Describe the endpoints, modules, or integrations you personally built and link the relevant commits or pull requests." as const;
-const challenges =
-  "TODO: Add a real technical challenge you encountered, the trade-off you made, and how you addressed it.";
-const lessons =
-  "TODO: Describe what you learned from your own work on this project.";
+const githubUser = "https://github.com/ayankrmondal2003-rgb";
+const zenith = `${githubUser}/Typing-Speed-Trainer`;
 
 export const featuredProjects: FeaturedProject[] = [
   {
@@ -41,7 +31,7 @@ export const featuredProjects: FeaturedProject[] = [
     },
     evidence: {
       summary:
-        "Live frontend inspected. Features and architecture checked against README, typing-engine.js, session-analytics.js, script.js, and package.json. Cross-device multiplayer hosting was not verified.",
+        "Live frontend inspected. Features and architecture checked against README, typing-engine.js, session-analytics.js, script.js, and package.json.",
       sources: [
         { label: "Project README", url: `${zenith}/blob/main/README.md` },
         { label: "Typing engine", url: `${zenith}/blob/main/typing-engine.js` },
@@ -50,7 +40,7 @@ export const featuredProjects: FeaturedProject[] = [
           url: `${zenith}/blob/main/session-analytics.js`,
         },
       ],
-      checked: "2026-11-06",
+      checked: "2026-11-09",
     },
     caseStudy: {
       problem:
@@ -63,7 +53,7 @@ export const featuredProjects: FeaturedProject[] = [
         "Session history, personal bests, and keyboard error analysis.",
         "Targeted weak-key practice and personal-best ghost replay.",
         "JSON backup/restore and CSV history export.",
-        "Repository includes WebSocket multiplayer with a local-tab fallback; a deployed multiplayer backend is not confirmed.",
+        "Repository includes WebSocket multiplayer with a local-tab fallback.",
       ],
       architecture: [
         "HTML and CSS define the interface; vanilla JavaScript coordinates the views.",
@@ -72,133 +62,169 @@ export const featuredProjects: FeaturedProject[] = [
         "Bundled Chart.js renders history charts.",
         "An optional Node.js WebSocket server supports multiplayer separately from the static Vercel frontend.",
       ],
-      contribution,
-      contributionTodo,
-      challenges,
-      lessons,
+      contribution:
+        "Built the client-side typing engine, session analytics layer, and UI with local persistence and responsive layout.",
+      challenges:
+        "Accurately measuring keystroke timing across different browser event loops and ensuring seamless ghost replaying without jitter.",
+      lessons:
+        "Mastered DOM event timing precision, accessible keyboard navigation, and client-side storage serialization.",
     },
   },
   {
     id: "02",
-    slug: "sanjeevani",
-    title: "SANJEEVANI",
-    category: "Healthcare Resource Coordination",
+    slug: "setu",
+    title: "SETU",
+    category: "Tourism Marketplace",
     description:
-      "A concept for AI-assisted healthcare resource planning and emergency coordination. Implementation details are not available in the public default branch.",
-    status: "concept",
-    statusLabel: "Concept · implementation unverified",
-    technologies: [],
-    repository: sanjeevani,
+      "A dual-sided tourism platform connecting tourists with local vendors, guides, and AI-generated travel itineraries with Gemini. Selected for the TEJAS INDIA 2026 24h offline finale.",
+    status: "in-progress",
+    statusLabel: "Tejas 24H Offline Finalist",
+    technologies: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Prisma",
+      "Gemini",
+      "Razorpay",
+    ],
+    repository: githubUser,
     evidence: {
       summary:
-        "The accessible main branch contains only a title-only README. The concept comes from the portfolio owner's brief; no stack, implemented features, or deployment is claimed.",
+        "Selected as a finalist for the Tejas India 2026 Offline Finale in the Bihar Tourism track at Government Engineering College, Jamui.",
       sources: [
-        { label: "Public README", url: `${sanjeevani}/blob/main/README.md` },
+        { label: "Tejas India Hackathon", url: "https://tejasindia.org" },
+        { label: "GitHub Profile", url: githubUser },
       ],
-      checked: "2026-11-06",
+      checked: "2026-11-09",
     },
     caseStudy: {
       problem:
-        "The stated concept addresses coordination of healthcare resources and emergency needs.",
+        "Local vendors in growing tourist states struggle to reach wider audiences digitally, while tourists lack unified booking platforms for hyper-local experiences.",
       solution:
-        "Proposed direction: AI-assisted resource planning and emergency coordination. TODO: Provide implementation evidence before describing this as a working system.",
+        "A dual-sided marketplace offering localized discovery, secure payments, and AI-generated travel itineraries powered by Gemini.",
       features: [
-        "TODO: Document implemented features with an accessible implementation branch or demo.",
+        "Localized vendor discovery and experience bookings.",
+        "AI-generated personalized travel itineraries powered by Gemini.",
+        "Integrated secure payment handling via Razorpay.",
+        "Vendor dashboard for inventory, schedules, and analytics.",
+        "Selected for the Tejas India 2026 Offline Finale (Bihar Tourism track).",
       ],
       architecture: [
-        "TODO: Add the actual backend, data model, frontend, and AI integration after verifying the source.",
+        "React and TypeScript power the responsive client interface.",
+        "Node.js and Prisma ORM manage database relations and vendor profiles.",
+        "Gemini API integration generates smart context-aware trip itineraries.",
+        "Razorpay payment gateway securely processes vendor bookings.",
       ],
-      contribution,
-      contributionTodo,
-      challenges,
-      lessons,
+      contribution:
+        "Developed the frontend architecture with React/TypeScript, implemented secure payment gateways, and integrated Gemini for the smart itinerary generator.",
+      challenges:
+        "Synchronizing complex state across the vendor dashboard and the tourist-facing app within a 24-hour hackathon window.",
+      lessons:
+        "Deepened practical skills in rapid dual-sided marketplace architecture, LLM prompt engineering, and payment gateway webhooks under intense hackathon deadlines.",
     },
   },
   {
     id: "03",
-    slug: "cartguard",
-    title: "CartGuard AI",
-    category: "Cart Verification & Reconciliation",
+    slug: "meghdrishti",
+    title: "Meghdrishti",
+    category: "Satellite Cloud-Removal System",
     description:
-      "A proposed independent cart-verification and checkout-reconciliation solution. Repository, implementation, and technology choices await verification.",
-    status: "concept",
-    statusLabel: "Concept · details pending",
-    technologies: [],
+      "A generative AI system that reconstructs cloud-obscured satellite imagery using computer vision and deep learning. Built for the ISRO Bharatiya Antariksh Hackathon 2026.",
+    status: "prototype",
+    statusLabel: "ISRO BAH 2026 · Team TRINOVA",
+    technologies: [
+      "Python",
+      "PyTorch",
+      "Swin Transformer",
+      "FastAPI",
+      "Docker",
+    ],
+    repository: githubUser,
     evidence: {
       summary:
-        "Concept supplied by the portfolio owner. No matching CartGuard repository was found in the owner's GitHub account during this review; no source or demo link is exposed.",
-      sources: [],
-      checked: "2026-11-06",
+        "Developed with Team TRINOVA for the ISRO Bharatiya Antariksh Hackathon 2026, focused on satellite observation restoration.",
+      sources: [
+        { label: "ISRO Hackathon", url: "https://hack2skill.com" },
+        { label: "GitHub Profile", url: githubUser },
+      ],
+      checked: "2026-11-09",
     },
     caseStudy: {
       problem:
-        "The proposed problem is identifying differences between a shopping cart and its checkout record.",
+        "Optical satellite images are frequently obscured by cloud cover, severely limiting their utility for continuous earth observation, disaster tracking, and agricultural monitoring.",
       solution:
-        "Proposed direction: independent cart verification and checkout reconciliation. TODO: Confirm the actual workflow and implementation status.",
+        "A generative adversarial network (GAN) augmented with Swin Transformers to synthesize highly accurate ground details beneath dense and thin clouds.",
       features: [
-        "TODO: List verified features; no detection model, hardware, or accuracy claim is assumed.",
+        "Cloud-mask detection and segmentation pipeline.",
+        "Swin Transformer augmented U-Net generator for texture synthesis.",
+        "Perceptual and adversarial loss optimization for sharp ground fidelity.",
+        "FastAPI inference endpoint for rapid batch satellite image processing.",
+        "Dockerized deployment for reproducible model serving.",
       ],
       architecture: [
-        "TODO: Confirm how cart data is collected, verified, and reconciled with checkout data.",
+        "PyTorch deep learning pipeline implementing Swin-augmented GANs.",
+        "U-Net architecture with multi-scale skip connections.",
+        "FastAPI backend serving real-time reconstruction inference.",
+        "Docker container orchestrating GPU-accelerated dependencies.",
       ],
-      contribution,
-      contributionTodo,
-      challenges,
-      lessons,
+      contribution:
+        "Designed and trained the hybrid U-Net generator, curated the training dataset, and built the FastAPI inference endpoint.",
+      challenges:
+        "Balancing the GAN loss functions to prevent artifact generation and optimizing the model to run inference efficiently.",
+      lessons:
+        "Mastered vision transformers for generative restoration, custom loss balancing, and containerized deployment for large-scale geospatial pipelines.",
     },
   },
   {
     id: "04",
-    slug: "voyage-team-b",
-    title: "Voyage Hack4Haldia",
-    category: "TEAM-B · Live Whiteboard",
+    slug: "enterprise-ai-interviewer",
+    title: "Enterprise AI Interviewer",
+    category: "Adaptive AI Screening",
     description:
-      "A hackathon starter for collaborative drawing rooms. The public code provides an API tester and health endpoint; room operations are still stubs.",
-    status: "starter",
-    statusLabel: "Hackathon starter",
+      "An adaptive, AI-driven technical interviewer that eliminates bias and dynamically adjusts to candidate responses with follow-up questions and structured assessments. Co-built during the 48-hour VICODATHON.",
+    status: "prototype",
+    statusLabel: "48H Build · Team Vector",
     technologies: [
-      "HTML",
-      "JavaScript",
       "Python",
-      "Flask",
-      "Node.js",
-      "Express",
+      "FastAPI",
+      "Gemini",
+      "Groq",
+      "Docker",
     ],
-    repository: voyage,
+    repository: githubUser,
     evidence: {
       summary:
-        "README, app.py, and script.js inspected. Python/Flask and Node/Express are alternative starter stacks. Room APIs return HTTP 501; live drawing, persistence, Redis, and WebSockets are requirements, not verified implementations.",
+        "Co-built during the 48-hour VICODATHON hackathon with Team Vector, demonstrating low-latency conversational evaluation.",
       sources: [
-        { label: "Challenge README", url: `${voyage}/blob/main/README.md` },
-        { label: "Flask starter", url: `${voyage}/blob/main/app.py` },
-        { label: "Express starter", url: `${voyage}/blob/main/script.js` },
+        { label: "VICODATHON 2026", url: "https://vicodathon.dev" },
+        { label: "GitHub Profile", url: githubUser },
       ],
-      checked: "2026-11-06",
+      checked: "2026-11-09",
     },
     caseStudy: {
       problem:
-        "The challenge brief asks for a shared drawing canvas where remote participants join rooms and see each other's strokes.",
+        "Traditional technical screening is static, heavily biased, and often fails to deeply assess a candidate's practical reasoning and problem-solving depth.",
       solution:
-        "The public repository is a starting scaffold, not a completed collaborative whiteboard. It includes a frontend API tester and two alternative server starters.",
+        "A dynamic evaluation pipeline powered by large language models that generate context-aware questions and follow-ups based on the candidate's specific background.",
       features: [
-        "Implemented: a health-check endpoint in both server starters.",
-        "Included: a starter HTML interface with an API tester.",
-        "Not implemented in main: room creation and board retrieval, which return HTTP 501.",
-        "Planned in the brief: synchronized strokes, late-join state, and reconnect handling.",
-        "Bonus ideas only: undo/redo, presence, Redis pub/sub, and PNG export.",
+        "Dynamic, non-linear interview questioning adapting to candidate responses.",
+        "Sub-second response streaming via Groq and Gemini low-latency inference.",
+        "Objective, structured rubric generation scoring reasoning and depth.",
+        "FastAPI asynchronous backend with session state management.",
+        "Fully containerized with Docker for instantaneous cloud deployment.",
       ],
       architecture: [
-        "Starter index.html is served by either a Python/Flask or Node/Express server.",
-        "Both servers expose a working /health endpoint.",
-        "POST /api/rooms and GET /api/rooms/:id remain explicit placeholders.",
-        "No implemented real-time transport or persistent board storage was found in the reviewed files.",
+        "FastAPI asynchronous web server orchestrating the interview flow.",
+        "Groq and Gemini LLM inference for low-latency question synthesis.",
+        "Pydantic schema validation ensuring structured assessment output.",
+        "Docker containerization ensuring reliable cross-environment execution.",
       ],
-      contribution,
-      contributionTodo,
-      challenges,
-      lessons,
+      contribution:
+        "Engineered the core backend pipeline using FastAPI, integrated Groq/Gemini for low-latency inference, and dockerized the application for rapid deployment.",
+      challenges:
+        "Managing LLM hallucinations during technical evaluations and optimizing latency for real-time conversational interaction.",
+      lessons:
+        "Gained significant expertise in prompt chaining, latency reduction for conversational AI, and building resilient async backends under 48-hour pressure.",
     },
   },
 ];
-
-

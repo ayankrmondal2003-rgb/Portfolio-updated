@@ -12,7 +12,7 @@ import { Contact } from "./components/sections/Contact";
 import { useEditorialMotion } from "./hooks/useEditorialMotion";
 
 const sections = [
-  { id: "doors", Content: Projects },
+  { id: "projects", Content: Projects },
   { id: "skills", Content: Skills },
   { id: "achievements", Content: Achievements },
   { id: "about", Content: About },

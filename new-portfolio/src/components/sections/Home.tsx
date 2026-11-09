@@ -38,9 +38,14 @@ export function Home() {
               <ButtonLink href="#doors">
                 See my work <ArrowDown size={18} aria-hidden="true" />
               </ButtonLink>
-              <ButtonLink variant="secondary" href={portfolio.socials[0].url}>
+              <ButtonLink variant="secondary" href={portfolio.socials[0].url} target="_blank" rel="noreferrer">
                 GitHub <ArrowUpRight size={18} aria-hidden="true" />
               </ButtonLink>
+              {portfolio.profile.resume.url && (
+                <ButtonLink variant="secondary" href={portfolio.profile.resume.url} target="_blank" rel="noreferrer">
+                  CV / Resume <ArrowUpRight size={18} aria-hidden="true" />
+                </ButtonLink>
+              )}
             </div>
           </div>
 

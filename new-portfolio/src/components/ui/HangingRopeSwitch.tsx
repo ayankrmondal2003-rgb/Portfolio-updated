@@ -1,8 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useTheme } from "../../hooks/useTheme";
 
-const RESTING_LENGTH = 180;
-const MAX_PULL = 260;
+const RESTING_LENGTH = 200;
+const MAX_PULL = 280;
 
 export function HangingRopeSwitch() {
   const { theme, toggleTheme } = useTheme();
@@ -17,20 +17,15 @@ export function HangingRopeSwitch() {
     setIsPulling(false);
     setIsRebounding(true);
 
+    toggleTheme();
+
     const initialOffset = length - RESTING_LENGTH;
-    if (Math.abs(initialOffset) < 10) {
-      // Direct click trigger
-      toggleTheme();
-    } else {
-      toggleTheme();
-    }
-
     const startTime = performance.now();
-    const duration = 800; // ms
-    const stiffness = 0.035;
-    const damping = 0.88;
+    const duration = 850;
+    const stiffness = 0.04;
+    const damping = 0.86;
 
-    let velocity = -initialOffset * stiffness * 15;
+    let velocity = -initialOffset * stiffness * 14;
     let currentOffset = initialOffset;
 
     const animate = (time: number) => {
@@ -41,7 +36,6 @@ export function HangingRopeSwitch() {
         return;
       }
 
-      // Spring acceleration: F = -k * x - c * v
       const acceleration = -stiffness * currentOffset;
       velocity = (velocity + acceleration) * damping;
       currentOffset += velocity;
@@ -71,8 +65,7 @@ export function HangingRopeSwitch() {
     if (!isPulling) return;
     const deltaY = e.clientY - startYRef.current;
     if (deltaY > 0) {
-      // Add resistance as it stretches
-      const stretch = Math.min(MAX_PULL, RESTING_LENGTH + deltaY * 0.7);
+      const stretch = Math.min(MAX_PULL, RESTING_LENGTH + deltaY * 0.75);
       setLength(stretch);
     }
   };
@@ -87,12 +80,10 @@ export function HangingRopeSwitch() {
     triggerSpring();
   };
 
-  // Click fallback for accessibility / keyboard
   const handleClick = (e: React.MouseEvent) => {
     if (isRebounding || isPulling) return;
     e.stopPropagation();
-    // Simulate quick pull & release
-    setLength(RESTING_LENGTH + 35);
+    setLength(RESTING_LENGTH + 40);
     setTimeout(() => {
       triggerSpring();
     }, 60);
@@ -104,6 +95,11 @@ export function HangingRopeSwitch() {
       handleClick(e as unknown as React.MouseEvent);
     }
   };
+
+  // Generate bead coordinates along the chain length
+  const beadSpacing = 7;
+  const beadCount = Math.floor((length - 12) / beadSpacing);
+  const beads = Array.from({ length: beadCount }, (_, i) => 8 + i * beadSpacing);
 
   return (
     <div
@@ -117,52 +113,66 @@ export function HangingRopeSwitch() {
     >
       <svg
         className="hanging-rope-svg"
-        width="28"
-        height={length + 40}
-        viewBox={`0 0 28 ${length + 40}`}
+        width="36"
+        height={length + 50}
+        viewBox={`0 0 36 ${length + 50}`}
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
       >
         <defs>
           {/* Metallic brass bead gradient */}
           <radialGradient id="brassBob" cx="35%" cy="30%" r="70%">
-            <stop offset="0%" stopColor="#FFF2A3" />
-            <stop offset="35%" stopColor="#DFB350" />
-            <stop offset="70%" stopColor="#9C6B1B" />
-            <stop offset="100%" stopColor="#4A3008" />
+            <stop offset="0%" stopColor="#FFF4B8" />
+            <stop offset="30%" stopColor="#E5BE5E" />
+            <stop offset="70%" stopColor="#A87524" />
+            <stop offset="100%" stopColor="#54370C" />
           </radialGradient>
-          {/* Cord shadow */}
-          <filter id="cordDropShadow" x="-30%" y="-10%" width="160%" height="130%">
-            <feDropShadow dx="2" dy="4" stdDeviation="3" floodOpacity="0.35" />
-          </filter>
+
+          {/* Individual ball chain bead gradient */}
+          <radialGradient id="ballBeadGrad" cx="35%" cy="30%" r="65%">
+            <stop offset="0%" stopColor="#FFF9D6" />
+            <stop offset="45%" stopColor="#D4A745" />
+            <stop offset="100%" stopColor="#6E4812" />
+          </radialGradient>
         </defs>
 
         {/* Top ceiling bracket mount */}
-        <rect x="9" y="0" width="10" height="4" rx="2" fill="#7A6030" />
-        <circle cx="14" cy="4" r="2.5" fill="#C59B3F" />
+        <rect x="12" y="0" width="12" height="4" rx="2" fill="#54370C" />
+        <circle cx="18" cy="4" r="3" fill="#D4A745" />
 
-        {/* Beaded cord path */}
+        {/* Central Core Cord Backbone */}
         <line
-          x1="14"
-          y1="5"
-          x2="14"
+          x1="18"
+          y1="4"
+          x2="18"
           y2={length}
-          stroke={theme === "dark" ? "#A88434" : "#7A602B"}
-          strokeWidth="1.8"
-          strokeDasharray="1.5 3"
+          stroke={theme === "dark" ? "#8A6220" : "#5A3E12"}
+          strokeWidth="2.5"
           strokeLinecap="round"
-          filter="url(#cordDropShadow)"
         />
 
-        {/* Lower brass collar ring */}
+        {/* The Ball Chain Beads along the middle */}
+        {beads.map((beadY, idx) => (
+          <circle
+            key={idx}
+            cx="18"
+            cy={beadY}
+            r="2.6"
+            fill="url(#ballBeadGrad)"
+            stroke="#4A3008"
+            strokeWidth="0.6"
+          />
+        ))}
+
+        {/* Lower brass collar ring (ferrule connector) */}
         <rect
-          x="10.5"
-          y={length - 4}
-          width="7"
-          height="5"
-          rx="1.5"
-          fill="#D8AE48"
-          stroke="#7A5618"
+          x="13.5"
+          y={length - 6}
+          width="9"
+          height="7"
+          rx="2"
+          fill="url(#brassBob)"
+          stroke="#54370C"
           strokeWidth="0.8"
         />
 
@@ -177,26 +187,28 @@ export function HangingRopeSwitch() {
         >
           {/* Main Teardrop Capsule */}
           <path
-            d={`M 14 ${length} 
-               C 9 ${length + 8}, 8 ${length + 18}, 10.5 ${length + 26}
-               C 12 ${length + 30}, 16 ${length + 30}, 17.5 ${length + 26}
-               C 20 ${length + 18}, 19 ${length + 8}, 14 ${length} Z`}
+            d={`M 18 ${length} 
+               C 11 ${length + 9}, 10 ${length + 20}, 13.5 ${length + 29}
+               C 15.5 ${length + 33}, 20.5 ${length + 33}, 22.5 ${length + 29}
+               C 26 ${length + 20}, 25 ${length + 9}, 18 ${length} Z`}
             fill="url(#brassBob)"
-            stroke="#634410"
-            strokeWidth="0.9"
-            filter="url(#cordDropShadow)"
+            stroke="#4A3008"
+            strokeWidth="1.2"
           />
-          {/* Specular Highlight Streak */}
+
+          {/* Specular Highlight Reflection on handle */}
           <ellipse
-            cx="12.5"
-            cy={length + 14}
-            rx="2"
-            ry="7"
-            fill="rgba(255, 255, 240, 0.65)"
-            transform={`rotate(-12 12.5 ${length + 14})`}
+            cx="15.8"
+            cy={length + 15}
+            rx="2.2"
+            ry="8.5"
+            fill="rgba(255, 255, 240, 0.7)"
+            transform={`rotate(-14 15.8 ${length + 15})`}
           />
-          {/* Bottom terminal bead */}
-          <circle cx="14" cy={length + 28} r="2.5" fill="#8C5C15" />
+
+          {/* Bottom terminal bead ring */}
+          <circle cx="18" cy={length + 31} r="2.8" fill="#54370C" />
+          <circle cx="18" cy={length + 31} r="1.8" fill="#D4A745" />
         </g>
       </svg>
     </div>

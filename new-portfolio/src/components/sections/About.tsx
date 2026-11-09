@@ -1,5 +1,7 @@
+import { ArrowUpRight } from "lucide-react";
 import { portfolio } from "../../data/portfolio";
 import { SectionHeading } from "../ui/SectionHeading";
+
 export function About() {
   return (
     <>
@@ -40,6 +42,22 @@ export function About() {
               <dt>BASED IN</dt>
               <dd>{portfolio.profile.location}</dd>
             </div>
+            {portfolio.profile.resume.url && (
+              <div>
+                <dt>RESUME / CV</dt>
+                <dd>
+                  <a
+                    href={portfolio.profile.resume.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="document-link"
+                    style={{ display: "inline-flex", alignItems: "center", gap: "6px" }}
+                  >
+                    View CV <ArrowUpRight size={14} aria-hidden="true" />
+                  </a>
+                </dd>
+              </div>
+            )}
           </dl>
         </div>
       </div>

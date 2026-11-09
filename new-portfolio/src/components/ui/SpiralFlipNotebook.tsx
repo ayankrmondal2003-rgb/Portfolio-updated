@@ -1,5 +1,4 @@
 import { useState, useEffect, useCallback } from "react";
-import { playPageFlip } from "../../lib/soundEffects";
 
 const ROLES = [
   { title: "App Developer", category: "MOBILE & CROSS-PLATFORM" },
@@ -16,7 +15,6 @@ export function SpiralFlipNotebook() {
   const flipNext = useCallback(() => {
     if (isFlipping) return;
     setIsFlipping(true);
-    playPageFlip();
 
     setTimeout(() => {
       setCurrentIndex((prev) => (prev + 1) % ROLES.length);

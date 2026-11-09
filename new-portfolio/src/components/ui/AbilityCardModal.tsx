@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 import { X, Sparkles, Code2, Layers, Cpu, Globe, CheckCircle2 } from "lucide-react";
 
 interface AbilityCardModalProps {
@@ -20,7 +21,7 @@ export function AbilityCardModal({ isOpen, onClose }: AbilityCardModalProps) {
 
   if (!isOpen) return null;
 
-  return (
+  const modalJSX = (
     <div
       className="ability-modal-backdrop"
       onClick={onClose}
@@ -38,13 +39,13 @@ export function AbilityCardModal({ isOpen, onClose }: AbilityCardModalProps) {
           onClick={onClose}
           aria-label="Close ability card"
         >
-          <X size={18} />
+          <X size={17} />
         </button>
 
         <div className="ability-card-header">
           <div className="ability-avatar-wrap">
             <span className="ability-level-badge mono">LVL 2026</span>
-            <Sparkles className="ability-sparkle-icon" size={20} />
+            <Sparkles className="ability-sparkle-icon" size={18} />
           </div>
           <div>
             <span className="mono ability-tag">CREATIVE TECHNOLOGIST & ENGINEER</span>
@@ -56,45 +57,45 @@ export function AbilityCardModal({ isOpen, onClose }: AbilityCardModalProps) {
         <div className="ability-stats-grid">
           <div className="stat-box">
             <div className="stat-title-row">
-              <Code2 size={16} />
+              <Code2 size={15} />
               <span>Full-Stack Engineering</span>
             </div>
             <div className="stat-bar-track">
               <div className="stat-bar-fill" style={{ width: "95%" }} />
             </div>
-            <p className="stat-tags mono">React 19 • TypeScript • Python • Next.js • Tailwind</p>
+            <p className="stat-tags mono">React 19 • TypeScript • Python • Next.js • Tailwind CSS</p>
           </div>
 
           <div className="stat-box">
             <div className="stat-title-row">
-              <Cpu size={16} />
+              <Cpu size={15} />
               <span>AI & Machine Learning</span>
             </div>
             <div className="stat-bar-track">
               <div className="stat-bar-fill" style={{ width: "90%" }} />
             </div>
-            <p className="stat-tags mono">PyTorch • Neural Networks • Computer Vision • LLMs</p>
+            <p className="stat-tags mono">PyTorch • Neural Networks • Computer Vision • Fast LLMs</p>
           </div>
 
           <div className="stat-box">
             <div className="stat-title-row">
-              <Layers size={16} />
+              <Layers size={15} />
               <span>3D & Creative Interaction</span>
             </div>
             <div className="stat-bar-track">
               <div className="stat-bar-fill" style={{ width: "88%" }} />
             </div>
-            <p className="stat-tags mono">Three.js • GSAP • CSS 3D • Framer • Canvas</p>
+            <p className="stat-tags mono">CSS 3D • GSAP • Motion • Accessible Design Systems</p>
           </div>
 
           <div className="stat-box">
             <div className="stat-title-row">
-              <Globe size={16} />
+              <Globe size={15} />
               <span>Availability & Mode</span>
             </div>
             <div className="stat-status-badge">
-              <CheckCircle2 size={15} className="text-emerald-500" />
-              <span>Remote-First • Open to Worldwide Contracts</span>
+              <CheckCircle2 size={14} className="text-emerald-500" />
+              <span>Remote-First • Open to Worldwide Collaboration</span>
             </div>
           </div>
         </div>
@@ -107,6 +108,10 @@ export function AbilityCardModal({ isOpen, onClose }: AbilityCardModalProps) {
       </div>
     </div>
   );
+
+  return typeof document !== "undefined"
+    ? createPortal(modalJSX, document.body)
+    : modalJSX;
 }
 
 export function AbilityCardBadge({ onClick }: { onClick: () => void }) {

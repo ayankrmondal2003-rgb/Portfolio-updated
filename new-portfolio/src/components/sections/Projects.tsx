@@ -1,8 +1,11 @@
 import { ArrowUpRight } from "lucide-react";
 import { portfolio } from "../../data/portfolio";
 import { DoorsSection } from "./DoorsSection";
+import { SectionHeading } from "../ui/SectionHeading";
+import { FeaturedProjectCard } from "../ui/FeaturedProjectCard";
 import { ProjectCard } from "../ui/ProjectCard";
 import { ProjectCaseStudy } from "./ProjectCaseStudy";
+import { GithubContributions } from "../ui/GithubContributions";
 
 export function Projects() {
   return (
@@ -10,24 +13,32 @@ export function Projects() {
       {/* 3D Doors Experience - "Magic happens behind the doors" */}
       <DoorsSection />
 
-      {/* GitHub Repository Strip */}
-      <div className="github-strip">
-        <div>
-          <p className="eyebrow">BUILDING IN THE OPEN</p>
-          <h3>Follow the source.</h3>
-          <p className="muted">
-            Explore repositories, architecture discussions, and open-source contributions.
-          </p>
-        </div>
+      {/* Editorial Selected Work Showcase */}
+      <div className="section-title-row">
+        <SectionHeading
+          number="01"
+          eyebrow="SELECTED WORK"
+          title="Ideas into practice"
+          description="Working software, hackathon starters, and ideas taking shape. Each project tells you exactly where it stands."
+        />
         <a
-          className="button button--secondary"
+          className="text-link"
           href={portfolio.socials[0].url}
           target="_blank"
           rel="noreferrer"
         >
-          GitHub profile <ArrowUpRight size={16} aria-hidden="true" />
+          Explore GitHub <ArrowUpRight size={16} aria-hidden="true" />
         </a>
       </div>
+
+      <div className="editorial-projects">
+        {portfolio.featuredProjects.map((project) => (
+          <FeaturedProjectCard key={project.slug} project={project} />
+        ))}
+      </div>
+
+      {/* Live Updating GitHub Contributions */}
+      <GithubContributions username="ayankrmondal2003-rgb" />
 
       {/* Earlier Projects Archive */}
       <details className="project-archive">

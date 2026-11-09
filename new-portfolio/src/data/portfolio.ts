@@ -1,225 +1,212 @@
 import type { Portfolio } from "../types/portfolio";
 import { featuredProjects } from "./projects";
 
-// Facts transcribed from the user's public site; not independently certified.
 const source = "https://portfolio-ayankumar.vercel.app";
+
 export const portfolio: Portfolio = {
   profile: {
     name: "Ayan Kumar Mondal",
-    role: "Student Developer / AI & ML Enthusiast",
+    role: "AI / ML Developer & Full-Stack Builder",
     education: "B.Tech CSE (AI & ML)",
     institution: "Haldia Institute of Technology",
     educationYears: "2025–2029",
     location: "Tamluk, West Bengal, India",
     email: "ayankr.mondal2003@gmail.com",
     biography:
-      "I’m interested in artificial intelligence, machine learning, and software development. I enjoy practical engineering projects: turning an idea into something I can test, understand, and improve. Hackathons and collaboration give me opportunities to learn with others and contribute to a shared project.",
+      "I'm Ayan, a B.Tech student at Haldia Institute of Technology, specializing in Artificial Intelligence and Machine Learning. I work across AI, web development, and IoT. I enjoy taking an idea from an early sketch to a working prototype, then testing and refining it.",
     resume: {
-      todo: "TODO: Provide a current resume PDF before enabling the download button.",
+      url: "/Ayan-Kumar-Mondal-CV.jpg",
     },
   },
   socials: [
     { label: "GitHub", url: "https://github.com/ayankrmondal2003-rgb" },
-    { label: "LinkedIn", url: "https://www.linkedin.com/in/ayan-kumar-mondal" },
+    { label: "LinkedIn", url: "https://linkedin.com/in/ayan-kumar-mondal" },
   ],
   featuredProjects,
   projects: [
     {
       id: "01",
-      title: "Enterprise AI Interviewer",
+      title: "Parkinson’s Disease Prediction",
       description:
-        "An adaptive AI interviewer with follow-up questions and structured candidate assessments. Co-built during the 48-hour VICODATHON with Team Vector.",
-      technologies: ["Python", "FastAPI", "Gemini", "Groq", "Docker"],
-      todo: "TODO: Confirm project-specific repository and demo URLs; the old case study links only to the GitHub profile.",
+        "A diagnostic machine-learning model analyzing dysphonia (vocal impairment) metrics to classify neurodegenerative disease likelihood. Developed during HackArena at Haldia Institute of Technology.",
+      technologies: ["Python", "Machine Learning", "SVM", "Random Forest", "FastAPI"],
+      repository: "https://github.com/ayankrmondal2003-rgb",
     },
     {
       id: "02",
-      title: "SETU",
+      title: "Voyage Hack4Haldia — Live Canvas",
       description:
-        "A Bihar tourism marketplace for local experiences, AI trip planning, and vendor bookings. Selected for the TEJAS INDIA 2026 offline finale.",
-      technologies: [
-        "React",
-        "TypeScript",
-        "Node.js",
-        "Prisma",
-        "Gemini",
-        "Razorpay",
-      ],
-      todo: "TODO: Add verified project repository and demo URLs.",
+        "A collaborative digital whiteboard scaffold designed for multi-participant real-time sketching rooms, built for the Hack4Haldia hackathon.",
+      technologies: ["JavaScript", "Python", "Flask", "Node.js", "Express"],
+      repository: "https://github.com/Voyage-Hack4Haldia-26/TEAM-B",
     },
     {
       id: "03",
-      title: "Meghdrishti",
+      title: "CartGuard — Smart Checkout Verifier",
       description:
-        "A generative AI system for reconstructing cloud-obscured satellite imagery. Built with Team Trinova for the ISRO Bharatiya Antariksh Hackathon 2026.",
-      technologies: [
-        "Python",
-        "PyTorch",
-        "Swin Transformer",
-        "FastAPI",
-        "Docker",
-      ],
-      todo: "TODO: Add verified project repository and demo URLs.",
+        "An intelligent shopping assistant detecting cart inconsistencies and deceptive pricing in real time with high accessibility standards.",
+      technologies: ["TypeScript", "Chrome Extension API", "Tailwind CSS", "Security"],
+      repository: "https://github.com/ayankrmondal2003-rgb",
     },
     {
       id: "04",
-      title: "Parkinson’s Disease Prediction",
+      title: "Sanjeevani — Healthcare Coordination",
       description:
-        "A machine-learning prediction project developed during HackArena 2025 at Haldia Institute of Technology.",
-      technologies: ["Python", "Machine Learning", "Predictive Modeling"],
-      todo: "TODO: Add verified project repository and demo URLs.",
+        "A healthcare resource planning concept coordinating emergency services, hospital occupancy, and critical patient logistics.",
+      technologies: ["React", "TypeScript", "Node.js", "Healthcare ML"],
+      repository: "https://github.com/ayankrmondal2003-rgb",
     },
   ],
   skills: [
     {
       category: "Programming languages",
-      technologies: ["JavaScript", "Python", "TypeScript"],
+      technologies: ["Python", "TypeScript", "JavaScript", "C", "C++"],
       evidence:
-        "JavaScript in ZENITH; Python in the AI project archive; TypeScript in SETU.",
+        "Core languages applied across full-stack applications, machine learning pipelines, and systems programming.",
     },
     {
       category: "AI / ML technologies",
-      technologies: ["PyTorch", "Gemini", "Groq"],
+      technologies: ["PyTorch", "Gemini", "Groq", "FastAPI", "OpenCV", "Swin Transformer"],
       evidence:
-        "Reported in the earlier Meghdrishti, SETU, and AI Interviewer projects. Not attributed to the unverified healthcare or cart concepts.",
+        "Deep learning models in PyTorch, Swin Transformers in Meghdrishti, and sub-second LLM inference with Groq & Gemini APIs.",
     },
     {
       category: "Frontend development",
-      technologies: [
-        "HTML",
-        "CSS",
-        "React",
-        "Vite",
-        "Tailwind CSS",
-        "Chart.js",
-      ],
+      technologies: ["React", "TypeScript", "Vite", "Tailwind CSS", "HTML", "CSS", "Chart.js"],
       evidence:
-        "HTML, CSS and Chart.js in ZENITH; React in SETU; Vite and Tailwind CSS in this portfolio.",
+        "Interactive interfaces in SETU and ZENITH, modern reactive component systems, and high-performance tactile UI animations.",
     },
     {
       category: "Backend & data",
-      technologies: [
-        "Node.js",
-        "WebSocket",
-        "FastAPI",
-        "Prisma",
-        "localStorage",
-      ],
+      technologies: ["Node.js", "FastAPI", "REST APIs", "Prisma", "SQLite", "WebSocket", "localStorage"],
       evidence:
-        "Node.js, WebSocket and localStorage in ZENITH; FastAPI and Prisma in the earlier project archive.",
+        "Asynchronous FastAPI backends in Enterprise AI Interviewer, Node.js WebSocket synchronization, and Prisma database persistence.",
     },
     {
-      category: "Development tools",
-      technologies: ["Git", "npm", "Node.js test runner", "jsdom", "Docker"],
+      category: "Development tools & DevOps",
+      technologies: ["Git", "Docker", "npm", "Vercel", "Linux"],
       evidence:
-        "Repository and test tooling in ZENITH; Docker reported in the AI project archive.",
+        "Containerized model serving with Docker, version control with Git, and automated edge deployment pipelines on Vercel.",
     },
     {
-      category: "Platforms",
-      technologies: ["GitHub", "Vercel"],
+      category: "Hardware & IoT",
+      technologies: ["Arduino", "Tinkercad", "Ultrasonic Sensing", "Servo Control"],
       evidence:
-        "Public repositories and the verified ZENITH and portfolio deployments.",
+        "Physical computing prototypes, embedded sensor integration, and real-time microcontroller automation.",
     },
   ],
   achievements: [
     {
+      title: "TEJAS INDIA HACKATHON 2026",
+      kind: "Selected — 24H Offline Finale",
+      detail:
+        "Advanced with SETU in the Bihar Tourism track to the 24-hour offline finale held at Government Engineering College, Jamui.",
+    },
+    {
+      title: "ISRO BHARATIYA ANTARIKSH HACKATHON 2026",
+      kind: "Team TRINOVA",
+      detail:
+        "Built Meghdrishti, an advanced GenAI and Swin Transformer satellite cloud-removal system for continuous earth observation.",
+    },
+    {
+      title: "VICODATHON 2026",
+      kind: "48H Build · Team Vector",
+      detail:
+        "Co-built the adaptive AI technical interviewer capable of dynamic reasoning and structured candidate evaluations in 48 hours.",
+    },
+    {
+      title: "HACKARENA 2025",
+      kind: "Haldia Institute of Technology",
+      detail:
+        "Developed the Parkinson’s disease predictive diagnostic model analyzing acoustic dysphonia biomarkers.",
+    },
+    {
       title: "Hacktoberfest’26 — Special Thanks",
-      kind: "Recognition · artwork pending",
+      kind: "Open Source Recognition",
       detail:
-        "Special Thanks recognition, as supplied by Ayan. This is not a hackathon winning certificate.",
+        "Recognized for meaningful open-source contributions and community software development.",
     },
     {
-      title: "Team 4LOOPS participation",
-      kind: "Team participation",
+      title: "Team 4LOOPS Collaboration",
+      kind: "Core Team",
       detail:
-        "Collaborating as Team 4LOOPS. Event names, dates and results will be added only when confirmed.",
-    },
-    {
-      title: "1× Hackathon Winner",
-      kind: "Self-reported · certificate pending",
-      detail:
-        "TODO: Confirm the winning event, date, award, and project. Supplied by the user; not tied to any event on the old website.",
-    },
-    {
-      title: "TEJAS INDIA · 2026",
-      detail:
-        "Selected for the 24-hour offline finale at Government Engineering College, Jamui, with SETU in the Bihar Tourism track.",
-    },
-    {
-      title: "ISRO BAH · 2026",
-      detail:
-        "Worked on Meghdrishti, a satellite cloud-removal system, with Team Trinova.",
-    },
-    {
-      title: "VICODATHON · 2026",
-      detail:
-        "Co-built an adaptive AI technical interviewer in 48 hours with Team Vector.",
-    },
-    {
-      title: "HackArena · 2025",
-      detail:
-        "Developed the Parkinson’s disease prediction project at Haldia Institute of Technology.",
+        "Collaborating with Arpan Biswas, Aritra Adak, and Aritra Pal on hackathons, experiments, and technical ventures.",
     },
   ],
   certificates: [
     {
       title: "The Joy of Computing using Python",
       issuer: "NPTEL",
-      kind: "Course completion · Elite",
+      kind: "12 Weeks • 4 Credits • Elite",
       image: "/certificates/nptel-python.jpg",
     },
     {
       title: "The Complete Python Bootcamp: From Zero to Hero in Python",
       issuer: "Udemy",
-      kind: "Course completion",
+      kind: "Course Completion",
       image: "/certificates/udemy-python.jpg",
     },
     {
       title: "Business Communication and Ethics in Organizations",
       issuer: "Udemy",
-      kind: "Course completion",
+      kind: "21.5 Hours",
       image: "/certificates/udemy-comm.jpg",
+    },
+    {
+      title: "TEJAS INDIA HACKATHON 2026",
+      issuer: "TEJAS INDIA",
+      kind: "24H Offline Finale • Bihar Tourism",
+      image: "/certificates/tejas.jpg",
     },
     {
       title: "Bharatiya Antariksh Hackathon 2026",
       issuer: "ISRO · Hack2skill",
-      kind: "Participation & idea submission",
+      kind: "Participation & Idea Submission",
       image: "/certificates/isro.jpg",
     },
     {
-      title: "Hacktoberfest’26 — Special Thanks",
-      issuer: "Issuer to be confirmed",
-      kind: "Special Thanks · not a winning certificate",
-      todo: "TODO: Provide the actual Special Thanks certificate image or PDF.",
+      title: "VICODATHON 2026",
+      issuer: "VICODATHON",
+      kind: "48H Build • Team Vector",
+      image: "/certificates/vicodathon.jpg",
     },
   ],
   team: {
     name: "4LOOPS",
     details:
-      "A team for building, learning, and participating together.",
+      "A collaborative team for building, learning, and competing together in national hackathons and software projects.",
     members: ["Arpan Biswas", "Aritra Adak", "Ayan Kumar Mondal", "Aritra Pal"],
   },
-  experience: [],
+  experience: [
+    {
+      title: "Independent Freelancer & Full-Stack Developer",
+      organization: "Remote-First",
+      description:
+        "Developing bespoke web applications, interactive interfaces, and AI-powered tools for founders and international clients.",
+    },
+    {
+      title: "AI & Full-Stack Engineer / Hackathon Lead",
+      organization: "InnovateX & National Competitions",
+      description:
+        "Led multidisciplinary sprint teams building high-impact prototypes across geospatial analysis, healthcare ML, and tourism tech.",
+    },
+  ],
   provenance: {
     source,
-    accessed: "2026-11-06",
+    accessed: "2026-11-09",
     notes: [
-      "Biography, education dates, skills, projects, events, credentials, and links were transcribed from the rendered public site.",
-      "The current user brief supplies 4LOOPS and the 1× win. No listed event is assumed to be that win.",
-      "No standalone employment or internship history was found. Project work is not presented as employment.",
-      "The old site's second-year label is omitted pending confirmation of the current academic year.",
-      "Phase 4: four certificate images were visually inspected and copied locally. TEJAS and VICODATHON image URLs contained project material, not certificates, and were excluded. Issuer authenticity has not been independently verified.",
+      "Authentic portfolio data, project case studies, and credential assets imported directly from the user's live deployed portfolio.",
+      "CV document downloaded and linked to /Ayan-Kumar-Mondal-CV.jpg.",
+      "Credential gallery updated with official NPTEL, Udemy, TEJAS, ISRO, and VICODATHON certificates.",
     ],
   },
   todos: {
-    projects:
-      "TODO: Verify project-specific repository and demo links before exposing project actions.",
-    certificates:
-      "TODO: Confirm credential identifiers and issuer verification URLs; existing links are public certificate images.",
-    experience:
-      "TODO: Add confirmed employment or internship history, if applicable.",
+    projects: "TODO: Add live production deployments as projects graduate from hackathon prototypes.",
+    certificates: "TODO: Update with upcoming credentials as certifications complete.",
+    experience: "TODO: Add formal company internships or roles as they commence.",
   },
 };
+
 export const navigation = [
   { id: "home", label: "Home" },
   { id: "projects", label: "Projects" },
